@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-const BASE_URL = "https://sourcerer-production.up.railway.app/api";
+const BASE_URL = "https://rastro-backend-4a9us.ondigitalocean.app/api";
 
 export async function getProduct(id: string) {
   const res = await fetch(`${BASE_URL}/product/${id}`);

@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const BASE_URL = 'https://sourcerer-production.up.railway.app/api';
+const BASE_URL = 'https://rastro-backend-4a9us.ondigitalocean.app/api';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
