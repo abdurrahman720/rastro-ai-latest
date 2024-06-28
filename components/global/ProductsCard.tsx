@@ -1,13 +1,12 @@
 'use client';
 import Image from 'next/image';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useAppContext } from '@/providers/context/context';
-import Link from 'next/link';
 
 type Props = {
   product: any;
@@ -17,7 +16,30 @@ type Props = {
 const ProductsCard = ({ product, lastElRef }: Props) => {
   const [clicked, setClicked] = useState(false);
 
+  const { t } = useTranslation();
+
   const { user, handleLogin } = useAppContext();
+
+  const router = useRouter();
+
+  const saveButtonRef = useRef(null);
+  const externalLinkButtonRef = useRef(null);
+
+  const handleClick = (e: any) => {
+    if (
+      (saveButtonRef.current &&
+        //@ts-ignore
+        saveButtonRef.current.contains(e.target as any)) ||
+      (externalLinkButtonRef.current &&
+        //@ts-ignore
+        externalLinkButtonRef.current.contains(e.target))
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      router.push(`/product/${product.id}`);
+    }
+  };
 
   const handleSaveClick = useCallback(() => {
     if (user) {
@@ -40,11 +62,8 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
     currentLocale === 'fr' ? product.title_french : product.title;
 
   return (
-    <Link href={`/product/${product.id}`} prefetch={true} ref={lastElRef}>
-      <div
-        // onClick={() => router.push(`/product/${product.id}`)}
-        className=' mb-4 break-inside-avoid p-1 rounded-sm group cursor-pointer z-10'
-      >
+    <div ref={lastElRef} onClick={handleClick}>
+      <div className=' mb-4 break-inside-avoid p-1 rounded-sm group cursor-pointer z-10'>
         <div className='relative'>
           <Image
             src={product.scanned_product.thumbnail_public_url}
@@ -68,7 +87,8 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
                 e.stopPropagation();
                 window.open(product.url, '_blank');
               }}
-              size={"sm"}
+              ref={externalLinkButtonRef}
+              size={'sm'}
               variant={'outline'}
               className='gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]'
             >
@@ -82,13 +102,14 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
                 e.stopPropagation();
                 handleSaveClick();
               }}
+              ref={saveButtonRef}
               // className={`bg-rastro-primary py-0 sm:py-2 px-[6px] sm:px-[12px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]`}
               className={clsx(
                 'bg-rastro-primary py-0 sm:py-2 px-[6px] sm:px-[12px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]',
                 { 'bg-black/60': clicked }
               )}
             >
-              Save
+              {clicked ? `${t('product:saved')}` : `${t('product:save')}`}
             </Button>
           </div>
           <div className=' absolute top-2 right-2 flex justify-center items-center gap-2 '>
@@ -116,7 +137,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
 
         <p className='mt-2 text-start font-semibold text-sm '>{productTitle}</p>
       </div>
-    </Link>
+    </div>
   );
 };
 

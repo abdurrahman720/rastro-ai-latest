@@ -86,7 +86,7 @@ const ProductCard = ({ product }: any) => {
           t={t}
           copyLinkToClipboard={copyLinkToClipboard}
         />
-        <Buttons router={router} product={product} />
+        <Buttons router={router} product={product} t={t} />
       </div>
       <div className='relative lg:mx-2'>
         <Carousel className=''>
@@ -110,7 +110,7 @@ const ProductCard = ({ product }: any) => {
                       className={`max-h-[350px] md:max-h-[500px] h-full object-cover w-full lg:rounded-lg cursor-pointer`}
                     />
                   </DialogTrigger>
-                  <DialogContent className='!h-[97vh] md:!h-[80vh] md:max-w-[90vw]  lg:max-w-[70vw] border-none '>
+                  <DialogContent className='!h-[97vh] md:!h-[80vh] md:max-w-[90vw] object-cover lg:max-w-[70vw] border-none '>
                     <Image
                       src={url}
                       alt={product?.title_french}
@@ -121,8 +121,8 @@ const ProductCard = ({ product }: any) => {
                       priority
                       onLoad={() => setImageLoading(false)}
                       className={`${
-                        isImageLoading ? 'bg-gray-200 min-h-80' : ''
-                      }  !h-[97vh] md:!h-[80vh] object-cover w-full lg:rounded-lg`}
+                        isImageLoading ? 'bg-black min-h-80' : ''
+                      }  !h-[97vh] md:!h-[80vh] object-contain md:object-contain w-full lg:rounded-lg`}
                     />
                   </DialogContent>
                 </Dialog>
@@ -139,7 +139,7 @@ const ProductCard = ({ product }: any) => {
             t={t}
             copyLinkToClipboard={copyLinkToClipboard}
           />
-          <Buttons router={router} product={product} />
+          <Buttons router={router} product={product} t={t} />
         </div>
         <Link
           prefetch={true}
@@ -219,7 +219,15 @@ const ProductCard = ({ product }: any) => {
 
 export default ProductCard;
 
-const Buttons = ({ router, product }: { router: any; product: any }) => {
+const Buttons = ({
+  router,
+  product,
+  t,
+}: {
+  router: any;
+  product: any;
+  t: any;
+}) => {
   const [clicked, setClicked] = useState(false);
   const { user, handleLogin } = useAppContext();
 
@@ -260,7 +268,7 @@ const Buttons = ({ router, product }: { router: any; product: any }) => {
           { 'bg-black/60': clicked }
         )}
       >
-        {clicked ? 'Saved' : ' Save'}
+        {clicked ? `${t('product:saved')}` : `${t('product:save')}`}
       </Button>
     </div>
   );

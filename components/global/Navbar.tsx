@@ -319,10 +319,11 @@ const UserInput = ({
 }) => {
   const {
     setSearchQuery,
-    searchProducts,
+    setIsSearching,
     searchByImage,
     isSearching,
     searchQuery,
+    searchProducts,
   } = useAppContext();
 
   const searchParams = useSearchParams();
@@ -351,6 +352,7 @@ const UserInput = ({
     }
 
     if (pathName === '/' || searchQuery) {
+      searchProducts();
       replace(`/?${params.toString()}`);
     }
   };
@@ -385,7 +387,7 @@ const UserInput = ({
       } else {
         params.delete('search');
       }
-
+      searchProducts();
       replace(`/?${params.toString()}`);
     }
   };

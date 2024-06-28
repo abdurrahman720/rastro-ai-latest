@@ -74,19 +74,12 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const pathName = usePathname();
-  const router = useRouter();
-
   const searchProducts = async () => {
     setIsSearching(true);
     const searchedProducts = await getProducts(1, 21, searchQuery);
 
     setProducts(searchedProducts);
     setIsSearching(false);
-
-    if (pathName !== '/') {
-      router.push('/');
-    }
   };
 
   const searchByImage = async (imageData: File) => {
@@ -134,6 +127,7 @@ function Context({ children }: { children: React.ReactNode }) {
         setProducts,
         searchByImage,
         isSearching,
+        setIsSearching,
       }}
     >
       {children}

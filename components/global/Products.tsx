@@ -18,24 +18,30 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
   const { setProducts, products } = useAppContext();
 
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const { ref, inView } = useInView();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setProducts(initialProducts || []);
   }, [initialProducts]);
 
   const loadMoreProducts = async () => {
     const nextPage = page + 1;
+    setLoading(true);
 
-    if (suggestionPage && productId) {
-      const res = await axiosInstance.get(
-        `/product/${productId}/nearest?page=${page}&page_size=${16}`
-      );
+    let url =
+      suggestionPage && productId
+        ? `/product/${productId}/nearest?page=${page}&page_size=${16}`
+        : `/products?page=${nextPage}&page_size=${16}`;
+
+    try {
+      const res = await axiosInstance.get(url);
 
       if (res.status === 200) {
         const newProducts = res.data;
-        // const newProducts = await getSuggestions(productId, nextPage, 12);
+
         setProducts((prev: any) => {
           const newProductIds = new Set(newProducts.map((p: any) => p.id));
           const finalProducts =
@@ -53,39 +59,22 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
         const scrollAmount = scrollableHeight * 0.01;
         window.scrollBy(0, -scrollAmount);
       }
-    } else {
-      const res = await axiosInstance.get(
-        `/products?page=${nextPage}&page_size=${16}`
-      );
-
-      if (res.status === 200) {
-        const newProducts = res.data;
-        // const newProducts = await getProducts(nextPage, 12);
-        setProducts((prev: any) => {
-          const newProductIds = new Set(newProducts.map((p: any) => p.id));
-          const finalProducts =
-            nextPage === 1
-              ? newProducts
-              : [
-                  ...prev.filter((p: any) => !newProductIds.has(p.id)),
-                  ...newProducts,
-                ];
-          return finalProducts || [];
-        });
-        const scrollableHeight =
-          document.documentElement.scrollHeight - window.innerHeight;
-        const scrollAmount = scrollableHeight * 0.01;
-        window.scrollBy(0, -scrollAmount);
-      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
     }
 
     setPage(nextPage);
   };
 
   useEffect(() => {
-    if (inView) {
-      loadMoreProducts();
-    }
+    const loadProducts = async () => {
+      if (inView) {
+        await loadMoreProducts();
+      }
+    };
+    loadProducts();
   }, [inView, page]);
 
   const breakPoints = {
@@ -117,19 +106,13 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
             <ProductsCard
               key={item.id}
               product={item}
-              lastElRef={
-                index === products.length - (suggestionPage ? 1 : 2)
-                  ? ref
-                  : null
-              }
+              lastElRef={index === products.length - 1 ? ref : null}
             />
           ))}
         </Masonry>
       </ResponsiveMasonry>
 
-      <div ref={ref} className='invisible'>
-        Load more
-      </div>
+      {loading && <div className='text-center'>Loading...</div>}
     </div>
   );
 };
