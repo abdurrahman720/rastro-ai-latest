@@ -24,7 +24,7 @@ export async function getSuggestions(
 
   return products;
 }
- 
+
 export async function getProducts(
   page: string | number,
   page_size: string | number,
