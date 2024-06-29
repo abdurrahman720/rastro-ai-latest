@@ -1,5 +1,6 @@
-// "use server";
+"use server";
 
+// localStorage.getItem("token");
 
 const BASE_URL = 'https://rastro-backend-4a9us.ondigitalocean.app/api';
 

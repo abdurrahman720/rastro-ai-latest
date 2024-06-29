@@ -11,8 +11,8 @@ import { Toaster } from "@/components/ui/sonner";
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Rastro",
-  description: "Every auction in Europe.",
+  title: "Rastro: every auction in Europe.",
+  description: "Never miss a gem.",
 };
 
 const i18nNamespaces = ["navbar", "product"];

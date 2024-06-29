@@ -25,7 +25,7 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setProducts(initialProducts || []);
-  }, [initialProducts]);
+  }, []);
 
   const loadMoreProducts = async () => {
     const nextPage = page + 1;
@@ -33,7 +33,7 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
 
     let url =
       suggestionPage && productId
-        ? `/product/${productId}/nearest?page=${page}&page_size=${16}`
+        ? `/product/${productId}/nearest?page=${page}&page_size=${40}`
         : `/products?page=${nextPage}&page_size=${16}`;
 
     try {
@@ -43,13 +43,13 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
         const newProducts = res.data;
 
         setProducts((prev: any) => {
-          const newProductIds = new Set(newProducts.map((p: any) => p.id));
+          const previds = new Set(prev.map((p: any) => p.id));
           const finalProducts =
             nextPage === 1
               ? newProducts
               : [
-                  ...prev.filter((p: any) => !newProductIds.has(p.id)),
-                  ...newProducts,
+                  ...prev,
+                  ...newProducts.filter((p: any) => !previds.has(p.id)),
                 ];
           return finalProducts || [];
         });
@@ -106,7 +106,11 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
             <ProductsCard
               key={item.id}
               product={item}
-              lastElRef={index === products.length - 1 ? ref : null}
+              lastElRef={
+                index === products.length - (suggestionPage ? 4 : 1)
+                  ? ref
+                  : null
+              }
             />
           ))}
         </Masonry>
