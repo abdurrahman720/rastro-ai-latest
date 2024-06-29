@@ -96,9 +96,24 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
               variant={'outline'}
               className='gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]'
             >
-              {product?.platform === 'Platform.INTERENCHERES'
-                ? 'Interencheres'
-                : 'Drouot'}
+              {
+                  (() => {
+                    switch (product?.platform) {
+                      case 'interencheres':
+                        return 'Interencheres';
+                      case 'drouot':
+                        return 'Drouot';
+                      case 'auctionet':
+                        return 'Auctionet';
+                      case 'saleroom':
+                        return 'Saleroom';
+                      case 'lottissimmo':
+                        return 'Lottissimmo';
+                      default:
+                        return 'Drouot'; 
+                    }
+                  })()
+                }
               <ExternalLinkIcon size={15} />
             </Button>
             <Button
