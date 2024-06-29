@@ -11,6 +11,7 @@ type Props = {
   params: {
     id: string;
   };
+  
 };
 
 const page_size = 60;

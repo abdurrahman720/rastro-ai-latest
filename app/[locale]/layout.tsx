@@ -12,7 +12,7 @@ const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rastro",
-  description: "Never miss a product.",
+  description: "Every auction in Europe.",
 };
 
 const i18nNamespaces = ["navbar", "product"];

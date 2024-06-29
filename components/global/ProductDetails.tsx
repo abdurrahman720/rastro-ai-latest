@@ -1,26 +1,48 @@
-import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
-import ProductCard from './ProductCard';
+"use client";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import ProductCard from "./ProductCard";
 
-import Products from './Products';
+import Products from "./Products";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const ProductDetails = ({ product, suggestions, productId }: any) => {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+
+  useEffect(() => {
+    const query = sessionStorage.getItem("searchQuery");
+    if (query) {
+      setSearchQuery(query);
+    }
+  }, []);
+
+  const handleBack = () => {
+    if (searchQuery && searchQuery !== "null") {
+      console.log("Navigating to:", `/?search=${searchQuery}`);
+      router.push(`/?search=${searchQuery}`);
+    } else {
+      console.log("Navigating to home");
+      router.push("/");
+    }
+  };
   return (
-    <div className='flex lg:flex-row flex-col gap-4 h-full lg:px-10'>
-      <div className='lg:w-[45%] xl:w-[35%] 2xl:w-[30%]  '>
-        <div className='flex items-start gap-4 w-full'>
-          <div className='w-12 hidden lg:block'>
-            <Link
-              href={'/'}
-              className='bg-white w-12 shadow-md h-9 rounded-[8px] p-1 flex justify-center items-center group'
+    <div className="flex lg:flex-row flex-col gap-4 h-full lg:px-10">
+      <div className="lg:w-[45%] xl:w-[35%] 2xl:w-[30%]  ">
+        <div className="flex items-start gap-4 w-full">
+          <div className="w-12 hidden lg:block">
+            <button
+              onClick={handleBack}
+              className="bg-white w-12 shadow-md h-9 rounded-[8px] p-1 flex justify-center items-center group"
             >
-              <ChevronLeft className='h-6 w-6 text-black ' />
-            </Link>
+              <ChevronLeft className="h-6 w-6 text-black " />
+            </button>
           </div>
           <ProductCard product={product} />
         </div>
       </div>
-      <div className='lg:w-[55%] xl:w-[65%] 2xl:w-[70%] px-5 lg:px-0'>
+      <div className="lg:w-[55%] xl:w-[65%] 2xl:w-[70%] px-5 lg:px-0">
         <Products
           initialProducts={suggestions}
           suggestionPage={true}

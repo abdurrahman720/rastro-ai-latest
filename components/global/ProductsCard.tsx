@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import React, { useCallback, useRef, useState } from 'react';
 import { Button } from '../ui/button';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
@@ -22,6 +22,9 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
 
   const router = useRouter();
 
+  const searchParams = useSearchParams()
+  const search:null|string = searchParams.get("search")
+
   const saveButtonRef = useRef(null);
   const externalLinkButtonRef = useRef(null);
 
@@ -37,6 +40,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
       e.preventDefault();
       e.stopPropagation();
     } else {
+       sessionStorage.setItem("searchQuery", search as string);
       router.push(`/product/${product.id}`);
     }
   };
