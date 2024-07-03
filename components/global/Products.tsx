@@ -7,6 +7,7 @@ import { useAppContext } from '@/providers/context/context';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import ProductsCard from './ProductsCard';
 import axiosInstance from '@/utils/axiosInstance';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
   initialProducts: any;
@@ -15,6 +16,12 @@ type Props = {
 };
 
 const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
+  const searchParams = useSearchParams();
+
+  const params = new URLSearchParams(searchParams);
+
+  const searchQuery = params.get('search');
+
   const { setProducts, products } = useAppContext();
 
   const [page, setPage] = useState(1);
@@ -34,7 +41,7 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
     let url =
       suggestionPage && productId
         ? `/product/${productId}/nearest?page=${page}&page_size=${40}`
-        : `/products?page=${nextPage}&page_size=${16}`;
+        : `/products?page=${nextPage}&page_size=${16}&query=${searchQuery}`;
 
     try {
       const res = await axiosInstance.get(url);
