@@ -1,1 +1,11 @@
-{"create_account":"Ein Konto erstellen","english":"Englisch","french":"Französisch","german":"Deutsch","language":"Sprache","log_out":"Ausloggen","saved_products":"Gespeicherte Produkte","search":"Suchen"}
+{
+  "create_account": "Ein Konto erstellen",
+  "english": "Englisch",
+  "french": "Französisch",
+  "german": "Deutsch",
+  "language": "Sprache",
+  "log_out": "Ausloggen",
+  "saved_products": "Gespeicherte Produkte",
+  "search": "Suchen",
+  "login": "Anmeldung"
+}
