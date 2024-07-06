@@ -41,7 +41,9 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
     let url =
       suggestionPage && productId
         ? `/product/${productId}/nearest?page=${page}&page_size=${40}`
-        : `/products?page=${nextPage}&page_size=${16}&query=${searchQuery}`;
+        : `/products?page=${nextPage}&page_size=${16}${
+            searchQuery ? `&query=${searchQuery}` : ''
+          }`;
 
     try {
       const res = await axiosInstance.get(url);
