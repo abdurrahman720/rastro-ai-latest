@@ -14,6 +14,7 @@ import { UserAvatar } from './UserAvatar';
 import { Brand } from './Brand';
 import { LanguageSelect } from './LanguageSelect';
 import { SearchInput } from './SearchInput';
+import { UserDropdownMenu } from './UserDropdownMenu';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -96,7 +97,14 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Button
+              <UserDropdownMenu
+                user={user}
+                handleLogout={handleLogout}
+                handleLogin={handleLogin}
+                t={t}
+                handleLangChange={handleLangChange}
+              />
+              {/* <Button
                 variant='default'
                 className={'px-[12px] py-[9px]'}
                 onClick={handleLogin}
@@ -106,7 +114,7 @@ const Navbar = () => {
               <LanguageSelect
                 language={currentLocale}
                 setLanguage={handleLangChange}
-              />
+              /> */}
             </>
           )}
         </div>
