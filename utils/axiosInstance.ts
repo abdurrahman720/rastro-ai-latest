@@ -3,24 +3,28 @@ import axios from 'axios';
 
 const BASE_URL = 'https://rastro-backend-4a9us.ondigitalocean.app/api';
 
-const axiosInstance = axios.create({
+
+
+
+const api = axios.create({
   baseURL: BASE_URL,
 });
 
 
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     if (typeof window !== 'undefined') {
-//       const token = localStorage.getItem('token');
-//       if (token) {
-//         config.headers['Authorization'] = `Bearer ${token}`;
-//       }
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+api.interceptors.request.use(
+  (config) => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        console.log({token})
+        config.headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-export default axiosInstance;
+export default api;

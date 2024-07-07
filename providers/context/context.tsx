@@ -2,6 +2,7 @@
 
 import { getProducts } from '@/actions/dataFetcher';
 import { auth } from '@/firebase/firebase';
+import api from '@/utils/axiosInstance';
 import axiosInstance from '@/utils/axiosInstance';
 import {
   onAuthStateChanged,
@@ -33,7 +34,9 @@ function Context({ children }: { children: React.ReactNode }) {
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [products, setProducts] = useState<any>([]);
+  const [likedProducts, setLikedProducts] = useState<any>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [refetchProducts, setRefetchProducts] = useState<boolean>(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -113,6 +116,14 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   };
 
+  useEffect(() => {
+    const getLikedProducts = async () => {
+      const response = await api.get(`/user/liked-products`);
+      setLikedProducts(response.data);
+    };
+    getLikedProducts();
+  }, [refetchProducts]);
+
   return (
     <AppContext.Provider
       value={{
@@ -128,6 +139,9 @@ function Context({ children }: { children: React.ReactNode }) {
         searchByImage,
         isSearching,
         setIsSearching,
+        likedProducts,
+        setRefetchProducts,
+        refetchProducts,
       }}
     >
       {children}

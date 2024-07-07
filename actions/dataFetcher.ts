@@ -1,4 +1,6 @@
-"use server";
+'use server';
+
+import api from '@/utils/axiosInstance';
 
 // localStorage.getItem("token");
 
@@ -28,13 +30,19 @@ export async function getSuggestions(
 export async function getProducts(
   page: string | number,
   page_size: string | number,
-  searchQuery: string = ""
+  searchQuery: string = ''
 ) {
   const res = await fetch(
     `${BASE_URL}/products?page=${page}&page_size=${page_size}&query=${searchQuery}`,
     { next: { revalidate: 30 } }
   );
   const products = await res.json();
+  return products;
+}
 
+export async function getLikedProducts() {
+  const res = await api.get(`/user/liked-products`);
+  const products = res.data;
+  console.log({products})
   return products;
 }

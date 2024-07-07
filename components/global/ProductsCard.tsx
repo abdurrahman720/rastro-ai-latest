@@ -2,12 +2,13 @@
 import Image from 'next/image';
 import React, { useCallback, useRef, useState } from 'react';
 import { Button } from '../ui/button';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { ExternalLinkIcon, Heart } from 'lucide-react';
+
+import { Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+
 import { useAppContext } from '@/providers/context/context';
 import Link from 'next/link';
+import api from '@/utils/axiosInstance';
 
 type Props = {
   product: any;
@@ -15,6 +16,8 @@ type Props = {
 };
 
 const ProductsCard = ({ product, lastElRef }: Props) => {
+  const { likedProducts, setRefetchProducts, refetchProducts } =
+    useAppContext();
   const [isImageLoading, setImageLoading] = useState(true);
   const closesAt: Date = new Date(product.closes_at);
   const now: Date = new Date();
@@ -25,24 +28,29 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
   const productTitle =
     currentLocale === 'fr' ? product.title_french : product.title;
 
-  const [isLiked, setIsLiked] = useState(false);
+  const likedProductsIds = likedProducts.map((prod: any) => prod.id);
+  const isLiked = likedProductsIds.includes(product?.id);
 
-  console.log({ product });
-
-  const handleIconClick = async () => {
+  const handleLinkUnlike = async () => {
     if (isLiked) {
-      // Call unlike API
       try {
-        // await fetch('/api/unlike', { method: 'POST' });
-        setIsLiked(false);
+        const response = await api.post('/user/unlike-product/', {
+          productId: product?.id,
+        });
+        console.log(response.data);
+
+        setRefetchProducts(!refetchProducts);
       } catch (error) {
         console.error('Error calling unlike API:', error);
       }
     } else {
-      // Call like API
       try {
-        // await fetch('/api/like', { method: 'POST' });
-        setIsLiked(true);
+        const response = await api.post('/user/like-product/', {
+          productId: product?.id,
+        });
+        console.log(response.data);
+
+        setRefetchProducts(!refetchProducts);
       } catch (error) {
         console.error('Error calling like API:', error);
       }
@@ -74,9 +82,8 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleIconClick();
+                  handleLinkUnlike();
                 }}
-                // onClick={handleIconClick}
               >
                 <Heart fill='white' className='w-5 h-5' />
               </Button>
@@ -86,7 +93,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleIconClick();
+                  handleLinkUnlike();
                 }}
               >
                 <Heart className='w-5 h-5' />
