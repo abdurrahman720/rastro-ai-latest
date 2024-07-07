@@ -124,6 +124,30 @@ function Context({ children }: { children: React.ReactNode }) {
     getLikedProducts();
   }, [refetchProducts]);
 
+  const handleLinkUnlike = async (isLiked: boolean, id: string | number) => {
+    if (isLiked) {
+      try {
+        await api.post('/user/unlike-product/', {
+          productId: id,
+        });
+
+        setRefetchProducts(!refetchProducts);
+      } catch (error) {
+        console.error('Error calling unlike API:', error);
+      }
+    } else {
+      try {
+        await api.post('/user/like-product/', {
+          productId: id,
+        });
+
+        setRefetchProducts(!refetchProducts);
+      } catch (error) {
+        console.error('Error calling like API:', error);
+      }
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -142,6 +166,7 @@ function Context({ children }: { children: React.ReactNode }) {
         likedProducts,
         setRefetchProducts,
         refetchProducts,
+        handleLinkUnlike,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../ui/button';
 
 import { Heart } from 'lucide-react';
@@ -8,16 +8,14 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppContext } from '@/providers/context/context';
 import Link from 'next/link';
-import api from '@/utils/axiosInstance';
 
 type Props = {
   product: any;
-  lastElRef: any;
+  lastElRef?: any;
 };
 
 const ProductsCard = ({ product, lastElRef }: Props) => {
-  const { likedProducts, setRefetchProducts, refetchProducts } =
-    useAppContext();
+  const { likedProducts, handleLinkUnlike } = useAppContext();
   const [isImageLoading, setImageLoading] = useState(true);
   const closesAt: Date = new Date(product.closes_at);
   const now: Date = new Date();
@@ -30,32 +28,6 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
 
   const likedProductsIds = likedProducts.map((prod: any) => prod.id);
   const isLiked = likedProductsIds.includes(product?.id);
-
-  const handleLinkUnlike = async () => {
-    if (isLiked) {
-      try {
-        const response = await api.post('/user/unlike-product/', {
-          productId: product?.id,
-        });
-        console.log(response.data);
-
-        setRefetchProducts(!refetchProducts);
-      } catch (error) {
-        console.error('Error calling unlike API:', error);
-      }
-    } else {
-      try {
-        const response = await api.post('/user/like-product/', {
-          productId: product?.id,
-        });
-        console.log(response.data);
-
-        setRefetchProducts(!refetchProducts);
-      } catch (error) {
-        console.error('Error calling like API:', error);
-      }
-    }
-  };
 
   return (
     <Link href={`/product/${product.id}`} prefetch={true} ref={lastElRef}>
@@ -82,7 +54,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleLinkUnlike();
+                  handleLinkUnlike(isLiked, product?.id);
                 }}
               >
                 <Heart fill='white' className='w-5 h-5' />
@@ -93,7 +65,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  handleLinkUnlike();
+                  handleLinkUnlike(isLiked, product?.id);
                 }}
               >
                 <Heart className='w-5 h-5' />

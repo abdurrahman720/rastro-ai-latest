@@ -15,6 +15,7 @@ import { Brand } from './Brand';
 import { LanguageSelect } from './LanguageSelect';
 import { SearchInput } from './SearchInput';
 import { UserDropdownMenu } from './UserDropdownMenu';
+import Link from 'next/link';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ const Navbar = () => {
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
-  const isProductPage = currentPathname.includes('product');
+  const isProductPage = currentPathname.includes('product/');
 
   const { user, handleLogin, handleLogout } = useAppContext();
   const [img, setImg] = useState<Blob | MediaSource | null>(null);
@@ -68,13 +69,15 @@ const Navbar = () => {
     };
   }, []);
 
+  console.log({ isProductPage });
+
   return (
     <div
       className={clsx(
-        `w-full flex flex-col lg:flex-row justify-between items-center px-4 md:px-10 py-4 md:mb-10 bg-white transition-all duration-300`,
+        `w-full flex flex-col lg:flex-row justify-between items-center px-4 md:px-10 py-4 md:mb-10 bg-white transition-all duration-300 lg:sticky lg:top-0 lg:z-50`,
         { 'hidden md:flex': isProductPage },
         {
-          'lg:sticky lg:top-0 lg:z-50': !isProductPage,
+          // 'lg:sticky lg:top-0 lg:z-50': !isProductPage,
           'lg:shadow-md': isScrolled,
         }
       )}
@@ -87,7 +90,9 @@ const Navbar = () => {
           {user ? (
             <>
               <Bell />
-              <Heart />
+              <Link href='/liked-products'>
+                <Heart />
+              </Link>
               <UserAvatar
                 user={user}
                 handleLogout={handleLogout}
@@ -145,7 +150,9 @@ const Navbar = () => {
         {user ? (
           <>
             <Bell />
-            <Heart />
+            <Link href='/liked-products'>
+              <Heart />
+            </Link>
             <UserAvatar
               user={user}
               handleLogout={handleLogout}
