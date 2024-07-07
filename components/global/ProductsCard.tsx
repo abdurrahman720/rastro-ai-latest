@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
-
+import moment from 'moment';
 import { Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -49,18 +49,18 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
           <div className='absolute bottom-2 right-2'>
             {isLiked ? (
               <Button
-                className='bg-[#828282] rounded-full px-1 w-8 h-8'
+                className='bg-[#FFE2E2] rounded-full px-1 w-8 h-8'
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleLinkUnlike(isLiked, product?.id);
                 }}
               >
-                <Heart fill='white' className='w-4 h-4' />
+                <Heart fill='#ff3040' className='w-4 h-4 text-[#ff3040]' />
               </Button>
             ) : (
               <Button
-                className='bg-[#aeaeae] rounded-full px-1 w-8 h-8'
+                className='bg-[#FFE2E2] rounded-full px-1 w-8 h-8 text-[#ff3040]'
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -72,29 +72,24 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
             )}
           </div>
           <div className=' absolute top-2 right-2 flex justify-center items-center gap-2 '>
-            {isLessThan24 && (
-              <div className=' '>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='20'
-                  height='20'
-                  viewBox='0 0 20 20'
-                  fill='none'
-                >
-                  <path
-                    d='M10 0.25C4.61547 0.25 0.25 4.61547 0.25 10C0.25 15.3845 4.61547 19.75 10 19.75C15.3845 19.75 19.75 15.3845 19.75 10C19.75 4.61547 15.3845 0.25 10 0.25ZM14.5 11.5H10C9.80109 11.5 9.61032 11.421 9.46967 11.2803C9.32902 11.1397 9.25 10.9489 9.25 10.75V4C9.25 3.80109 9.32902 3.61032 9.46967 3.46967C9.61032 3.32902 9.80109 3.25 10 3.25C10.1989 3.25 10.3897 3.32902 10.5303 3.46967C10.671 3.61032 10.75 3.80109 10.75 4V10H14.5C14.6989 10 14.8897 10.079 15.0303 10.2197C15.171 10.3603 15.25 10.5511 15.25 10.75C15.25 10.9489 15.171 11.1397 15.0303 11.2803C14.8897 11.421 14.6989 11.5 14.5 11.5Z'
-                    fill='#ED0000'
-                  />
-                </svg>
-              </div>
-            )}
             <p className='bg-white shadow-sm rounded-[8px]  px-[6px] py-[3px] sm:px-2 sm:py-1 font-semibold sm:text-sm'>{`€ ${Math.round(
               product.estimated_price_min
             )} - ${Math.round(product.estimated_price_max)}`}</p>
           </div>
         </div>
 
-        <p className='mt-2 text-start font-semibold text-sm '>{productTitle}</p>
+        <p className='my-2 text-start font-semibold text-sm'>{productTitle}</p>
+
+        <span
+          style={{
+            backgroundColor: isLessThan24 ? '#FFE2E2' : '#F6F6FF',
+          }}
+          className='text-sm px-3 py-1.5 rounded-[20px]'
+        >
+          {moment(product?.closes_at).isSame(moment(), 'day')
+            ? `Today ${moment(product?.closes_at).format('h:mm A')}`
+            : moment(product?.closes_at).format('MMMM D, h:mm A')}
+        </span>
       </div>
     </Link>
   );

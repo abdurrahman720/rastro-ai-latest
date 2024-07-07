@@ -9,7 +9,7 @@ import {
   ExternalLinkIcon,
   Heart,
 } from 'lucide-react';
-import { formatDate } from '@/utils/formatDate';
+
 import { useEffect, useState } from 'react';
 
 import {
@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useAppContext } from '@/providers/context/context';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import moment from 'moment';
 
 const ProductCard = ({ product }: any) => {
   const { t } = useTranslation();
@@ -90,7 +91,7 @@ const ProductCard = ({ product }: any) => {
   };
 
   const closesAt: Date = new Date(product?.closes_at);
-  const closesAtLocal = formatDate(closesAt);
+
   const now: Date = new Date();
   const isLessThan24: boolean =
     (closesAt.getTime() - now.getTime()) / (1000 * 60 * 60) < 24;
@@ -173,22 +174,6 @@ const ProductCard = ({ product }: any) => {
           <ChevronLeft className='h-6 w-6 text-black' />
         </button>
         <div className='absolute top-2 right-2 flex justify-center items-center gap-2 p-4'>
-          {isLessThan24 && (
-            <div>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='20'
-                height='20'
-                viewBox='0 0 20 20'
-                fill='none'
-              >
-                <path
-                  d='M10 0.25C4.61547 0.25 0.25 4.61547 0.25 10C0.25 15.3845 4.61547 19.75 10 19.75C15.3845 19.75 19.75 15.3845 19.75 10C19.75 4.61547 15.3845 0.25 10 0.25ZM14.5 11.5H10C9.80109 11.5 9.61032 11.421 9.46967 11.2803C9.32902 11.1397 9.25 10.9489 9.25 10.75V4C9.25 3.80109 9.32902 3.61032 9.46967 3.46967C9.61032 3.32902 9.80109 3.25 10 3.25C10.1989 3.25 10.3897 3.32902 10.5303 3.46967C10.671 3.61032 10.75 3.80109 10.75 4V10H14.5C14.6989 10 14.8897 10.079 15.0303 10.2197C15.171 10.3603 15.25 10.5511 15.25 10.75C15.25 10.9489 15.171 11.1397 15.0303 11.2803C14.8897 11.421 14.6989 11.5 14.5 11.5Z'
-                  fill='#ED0000'
-                />
-              </svg>
-            </div>
-          )}
           <p className='bg-white shadow-sm rounded-[8px] px-[6px] py-[3px] sm:px-2 sm:py-1 font-semibold sm:text-sm w-full h-9 flex justify-center items-center'>{`€ ${Math.round(
             product?.estimated_price_min
           )} - ${Math.round(product?.estimated_price_max)}`}</p>
@@ -200,22 +185,19 @@ const ProductCard = ({ product }: any) => {
           {productTitle}
         </p>
         <div className='flex flex-row justify-start items-start gap-1'>
-          {/* <p className='text-start font-semibold text-base'>
-            {t('product:closing')}:{' '}
-            <span className='text-[#ED0000] font-normal'>{closesAtLocal}</span>{' '}
-          </p> */}
-
-          <p className='bg-[#F6F6FF] text-base px-3 py-1.5 rounded-[20px]'>
-            {closesAtLocal}
+          <p
+            style={{
+              backgroundColor: isLessThan24 ? '#FFE2E2' : '#F6F6FF',
+            }}
+            className='text-base px-3 py-1.5 rounded-[20px]'
+          >
+            {moment(product?.closes_at).isSame(moment(), 'day')
+              ? `Today ${moment(product?.closes_at).format('h:mm A')}`
+              : moment(product?.closes_at).format('MMMM D, h:mm A')}
           </p>
           <p className='bg-[#F6F6FF] text-base px-3 py-1.5 rounded-[20px]'>
             {product?.location_country}
           </p>
-
-          {/* <p className='text-start font-semibold text-base'>
-            {t('product:country')}:{' '}
-            <span className='font-normal'>{product?.location_country}</span>{' '}
-          </p> */}
         </div>
         <div className='flex flex-col justify-start items-start gap-1 pb-2'>
           {!isOpen && (
@@ -297,15 +279,15 @@ const Buttons = ({ copied, product, copyLinkToClipboard, t }: any) => {
 
       {isLiked ? (
         <Heart
-          fill='black'
-          className='w-6 h-6 cursor-pointer'
+          fill='#ff3040'
+          className='w-6 h-6 cursor-pointer text-[#ff3040]'
           onClick={(e: any) => {
             handleLinkUnlike(isLiked, product?.id);
           }}
         />
       ) : (
         <Heart
-          className='w-6 h-6 cursor-pointer'
+          className='w-6 h-6 cursor-pointer text-[#ff3040]'
           onClick={(e: any) => {
             handleLinkUnlike(isLiked, product?.id);
           }}
