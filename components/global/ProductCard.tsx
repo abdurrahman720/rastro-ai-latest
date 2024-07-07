@@ -174,9 +174,14 @@ const ProductCard = ({ product }: any) => {
           <ChevronLeft className='h-6 w-6 text-black' />
         </button>
         <div className='absolute top-2 right-2 flex justify-center items-center gap-2 p-4'>
-          <p className='bg-white shadow-sm rounded-[8px] px-[6px] py-[3px] sm:px-2 sm:py-1 font-semibold sm:text-sm w-full h-9 flex justify-center items-center'>{`€ ${Math.round(
-            product?.estimated_price_min
-          )} - ${Math.round(product?.estimated_price_max)}`}</p>
+          <p className='bg-white shadow-sm rounded-[8px] px-[6px] py-[3px] sm:px-2 sm:py-1 font-semibold sm:text-sm w-full h-9 flex justify-center items-center'>{`€ ${
+            Math.round(product?.estimated_price_min) ===
+            Math.round(product?.estimated_price_max)
+              ? Math.round(product?.estimated_price_min)
+              : `${Math.round(product?.estimated_price_min)} - ${Math.round(
+                  product?.estimated_price_max
+                )}`
+          }`}</p>
         </div>
       </div>
 
