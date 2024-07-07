@@ -255,7 +255,7 @@ const Buttons = ({ copied, product, copyLinkToClipboard, t }: any) => {
             window.open(product.url, '_blank');
           }}
           variant={'outline'}
-          className='gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[14px] font-medium sm:h-[40px] h-[32px]'
+          className='gap-1 px-[12px] py-2 text-[14px] font-medium h-[40px]'
         >
           {(() => {
             switch (product?.platform) {
@@ -309,7 +309,7 @@ const CopyButton = ({
   return (
     <Button
       variant={'outline'}
-      className='gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[14px] font-medium sm:h-[40px] h-[32px] cursor-pointer transition-opacity duration-300'
+      className='gap-1 px-[12px] py-2 text-[14px] font-medium h-[40px] cursor-pointer transition-opacity duration-300'
       onClick={copyLinkToClipboard}
     >
       {copied ? `${t('product:copied')}` : `${t('product:copy_link')}`}

@@ -143,7 +143,7 @@ export const SearchInput = ({
             </button>
           </div>
         ) : (
-          <label htmlFor='image'>
+          <label htmlFor='image' className='cursor-pointer'>
             <Image src={cameraPlus} alt='upload' width={42} height={42} />
           </label>
         )}
