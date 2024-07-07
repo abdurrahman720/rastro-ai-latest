@@ -80,7 +80,7 @@ export const UserAvatar = ({
               </DropdownMenuPortal>
             )}
           </DropdownMenuSub>
-          <DropdownMenuItem onClick={handleLogout}>
+          <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
             <span className='text-sm font-semibold text-red-600 inline-flex gap-2 items-center'>
               <LogOut className='w-4 h-4' />
               {t('log_out')}

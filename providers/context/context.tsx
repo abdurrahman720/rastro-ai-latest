@@ -118,13 +118,21 @@ function Context({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const getLikedProducts = async () => {
-      const response = await api.get(`/user/liked-products`);
-      setLikedProducts(response.data);
+      try {
+        const response = await api.get(`/user/liked-products`);
+        setLikedProducts(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getLikedProducts();
   }, [refetchProducts]);
 
   const handleLinkUnlike = async (isLiked: boolean, id: string | number) => {
+    if (!user) {
+      return handleLogin();
+    }
+
     if (isLiked) {
       try {
         await api.post('/user/unlike-product/', {
@@ -148,6 +156,8 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const likedProductsIds = likedProducts.map((prod: any) => prod.id);
+
   return (
     <AppContext.Provider
       value={{
@@ -167,6 +177,7 @@ function Context({ children }: { children: React.ReactNode }) {
         setRefetchProducts,
         refetchProducts,
         handleLinkUnlike,
+        likedProductsIds,
       }}
     >
       {children}

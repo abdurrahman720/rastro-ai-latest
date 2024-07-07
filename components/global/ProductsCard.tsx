@@ -15,7 +15,7 @@ type Props = {
 };
 
 const ProductsCard = ({ product, lastElRef }: Props) => {
-  const { likedProducts, handleLinkUnlike } = useAppContext();
+  const { handleLinkUnlike, likedProductsIds } = useAppContext();
   const [isImageLoading, setImageLoading] = useState(true);
   const closesAt: Date = new Date(product.closes_at);
   const now: Date = new Date();
@@ -26,7 +26,6 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
   const productTitle =
     currentLocale === 'fr' ? product.title_french : product.title;
 
-  const likedProductsIds = likedProducts.map((prod: any) => prod.id);
   const isLiked = likedProductsIds.includes(product?.id);
 
   return (
@@ -50,73 +49,27 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
           <div className='absolute bottom-2 right-2'>
             {isLiked ? (
               <Button
-                className='bg-[#aeaeae] rounded-full p-2.5'
+                className='bg-[#828282] rounded-full px-1 w-8 h-8'
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleLinkUnlike(isLiked, product?.id);
                 }}
               >
-                <Heart fill='white' className='w-5 h-5' />
+                <Heart fill='white' className='w-4 h-4' />
               </Button>
             ) : (
               <Button
-                className='bg-[#aeaeae] rounded-full p-2.5'
+                className='bg-[#aeaeae] rounded-full px-1 w-8 h-8'
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleLinkUnlike(isLiked, product?.id);
                 }}
               >
-                <Heart className='w-5 h-5' />
+                <Heart className='w-4 h-4' />
               </Button>
             )}
-            {/* <Button
-              onClick={(e: any) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.open(product.url, "_blank");
-              }}
-              ref={externalLinkButtonRef}
-              size={"sm"}
-              variant={"outline"}
-              className="gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]"
-            >
-                {
-                  (() => {
-                    switch (product?.platform) {
-                      case 'interencheres':
-                        return 'Interencheres';
-                      case 'drouot':
-                        return 'Drouot';
-                      case 'auctionet':
-                        return 'Auctionet';
-                      case 'saleroom':
-                        return 'Saleroom';
-                      case 'lottissimmo':
-                        return 'Lottissimmo';
-                      default:
-                        return 'Drouot'; 
-                    }
-                  })()
-                }
-              <ExternalLinkIcon size={15} />
-            </Button>
-            <Button
-              onClick={(e: any) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleSaveClick();
-              }}
-              ref={saveButtonRef}
-              // className={`bg-rastro-primary py-0 sm:py-2 px-[6px] sm:px-[12px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]`}
-              className={clsx(
-                "bg-rastro-primary py-0 sm:py-2 px-[6px] sm:px-[12px] text-[10px] sm:text-[14px] font-medium sm:h-[40px] h-[32px]",
-                { "bg-black/60": clicked }
-              )}
-            >
-              {clicked ? `${t("product:saved")}` : `${t("product:save")}`}
-            </Button> */}
           </div>
           <div className=' absolute top-2 right-2 flex justify-center items-center gap-2 '>
             {isLessThan24 && (

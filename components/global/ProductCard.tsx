@@ -2,10 +2,16 @@
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronLeft, Copy, ExternalLinkIcon } from 'lucide-react';
+import {
+  Check,
+  ChevronLeft,
+  Copy,
+  ExternalLinkIcon,
+  Heart,
+} from 'lucide-react';
 import { formatDate } from '@/utils/formatDate';
-import { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
 import {
   Carousel,
   CarouselContent,
@@ -14,7 +20,7 @@ import {
   CarouselPrevious,
 } from '../ui/carousel';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+
 import { toast } from 'sonner';
 import { useAppContext } from '@/providers/context/context';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
@@ -38,7 +44,7 @@ const ProductCard = ({ product }: any) => {
     if (searchQuery && searchQuery !== 'null') {
       router.push(`/?search=${searchQuery}`);
     } else {
-      router.push('/');
+      router.back();
     }
   };
 
@@ -93,14 +99,15 @@ const ProductCard = ({ product }: any) => {
 
   return (
     <div className='mb-4 rounded-md lg:shadow-custom w-full lg:max-h-[800px] lg:overflow-y-auto'>
-      <div className='hidden lg:flex justify-between items-center gap-2 px-2 py-3'>
-        <CopyButton
-          copied={copied}
+      <div className='hidden lg:block'>
+        <Buttons
+          product={product}
           t={t}
           copyLinkToClipboard={copyLinkToClipboard}
+          copied={copied}
         />
-        <Buttons router={router} product={product} t={t} />
       </div>
+
       <div className='relative lg:mx-2'>
         <Carousel>
           <CarouselContent>
@@ -146,13 +153,13 @@ const ProductCard = ({ product }: any) => {
           <CarouselNext className='absolute top-1/2 right-2 z-20' />
         </Carousel>
 
-        <div className='flex justify-between items-center gap-2 my-2 lg:hidden px-5'>
-          <CopyButton
-            copied={copied}
+        <div className='block lg:hidden'>
+          <Buttons
+            product={product}
             t={t}
             copyLinkToClipboard={copyLinkToClipboard}
+            copied={copied}
           />
-          <Buttons router={router} product={product} t={t} />
         </div>
         <button
           onClick={(e) => {
@@ -233,71 +240,69 @@ const ProductCard = ({ product }: any) => {
 
 export default ProductCard;
 
-const Buttons = ({
-  router,
-  product,
-  t,
-}: {
-  router: any;
-  product: any;
-  t: any;
-}) => {
-  const [clicked, setClicked] = useState(false);
-  const { user, handleLogin } = useAppContext();
+const Buttons = ({ copied, product, copyLinkToClipboard, t }: any) => {
+  const { handleLinkUnlike, likedProductsIds } = useAppContext();
 
-  const handleSaveClick = useCallback(() => {
-    if (user) {
-      setClicked((prev) => !prev);
-    } else {
-      handleLogin();
-    }
-  }, [user, handleLogin]);
+  const isLiked = likedProductsIds.includes(product?.id);
 
   return (
-    <div
-      className='flex gap-2'
-      onClick={(e: any) => {
-        e.stopPropagation();
-      }}
-    >
-      <Button
+    <div className='flex justify-between items-center gap-2 px-2 py-3'>
+      <div
+        className='flex gap-2'
         onClick={(e: any) => {
           e.stopPropagation();
-          window.open(product.url, '_blank');
         }}
-        variant={'outline'}
-        className='gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[14px] font-medium sm:h-[40px] h-[32px]'
       >
-          {
-            (() => {
-              switch (product?.platform) {
-                case 'interencheres':
-                  return 'Interencheres';
-                case 'drouot':
-                  return 'Drouot';
-                case 'auctionet':
-                  return 'Auctionet';
-                case 'saleroom':
-                  return 'Saleroom';
-                case 'lottissimmo':
-                  return 'Lottissimmo';
-                default:
-                  return 'Drouot'; 
-              }
-            })()
-          }
-        <ExternalLinkIcon size={15} />
-      </Button>
+        <CopyButton
+          copied={copied}
+          t={t}
+          copyLinkToClipboard={copyLinkToClipboard}
+        />
 
-      <Button
-        onClick={() => handleSaveClick()}
-        className={clsx(
-          'bg-rastro-primary py-0 sm:py-2 px-[6px] sm:px-[12px] text-[14px] font-medium sm:h-[40px] h-[32px]',
-          { 'bg-black/60': clicked }
-        )}
-      >
-        {clicked ? `${t('product:saved')}` : `${t('product:save')}`}
-      </Button>
+        <Button
+          onClick={(e: any) => {
+            e.stopPropagation();
+            window.open(product.url, '_blank');
+          }}
+          variant={'outline'}
+          className='gap-1 sm:px-[12px] py-0 sm:py-2 px-[8px] text-[14px] font-medium sm:h-[40px] h-[32px]'
+        >
+          {(() => {
+            switch (product?.platform) {
+              case 'interencheres':
+                return 'Interencheres';
+              case 'drouot':
+                return 'Drouot';
+              case 'auctionet':
+                return 'Auctionet';
+              case 'saleroom':
+                return 'Saleroom';
+              case 'lottissimmo':
+                return 'Lottissimmo';
+              default:
+                return 'Drouot';
+            }
+          })()}
+          <ExternalLinkIcon size={15} />
+        </Button>
+      </div>
+
+      {isLiked ? (
+        <Heart
+          fill='black'
+          className='w-6 h-6 cursor-pointer'
+          onClick={(e: any) => {
+            handleLinkUnlike(isLiked, product?.id);
+          }}
+        />
+      ) : (
+        <Heart
+          className='w-6 h-6 cursor-pointer'
+          onClick={(e: any) => {
+            handleLinkUnlike(isLiked, product?.id);
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -38,7 +38,7 @@ const ProductDetails = ({ product, suggestions, productId }: any) => {
       router.push(`/?search=${searchQuery}`);
     } else {
       console.log('Navigating to home');
-      router.push('/');
+      router.back();
     }
   };
   return (
