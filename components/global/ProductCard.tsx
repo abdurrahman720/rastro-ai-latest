@@ -199,15 +199,23 @@ const ProductCard = ({ product }: any) => {
         <p className='mt-2 text-start font-semibold text-[20px]'>
           {productTitle}
         </p>
-        <div className='flex flex-col justify-start items-start gap-1'>
-          <p className='text-start font-semibold text-base'>
+        <div className='flex flex-row justify-start items-start gap-1'>
+          {/* <p className='text-start font-semibold text-base'>
             {t('product:closing')}:{' '}
             <span className='text-[#ED0000] font-normal'>{closesAtLocal}</span>{' '}
+          </p> */}
+
+          <p className='bg-[#F6F6FF] text-base px-3 py-1.5 rounded-[20px]'>
+            {closesAtLocal}
           </p>
-          <p className='text-start font-semibold text-base'>
+          <p className='bg-[#F6F6FF] text-base px-3 py-1.5 rounded-[20px]'>
+            {product?.location_country}
+          </p>
+
+          {/* <p className='text-start font-semibold text-base'>
             {t('product:country')}:{' '}
             <span className='font-normal'>{product?.location_country}</span>{' '}
-          </p>
+          </p> */}
         </div>
         <div className='flex flex-col justify-start items-start gap-1 pb-2'>
           {!isOpen && (
