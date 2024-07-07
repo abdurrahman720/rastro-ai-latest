@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '../ui/button';
-import { Bell, Heart } from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
@@ -15,7 +15,7 @@ import { Brand } from './Brand';
 import { LanguageSelect } from './LanguageSelect';
 import { SearchInput } from './SearchInput';
 import { UserDropdownMenu } from './UserDropdownMenu';
-import Link from 'next/link';
+import NavLikeItem from './NavLikeItem';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -69,12 +69,10 @@ const Navbar = () => {
     };
   }, []);
 
-  console.log({ isProductPage });
-
   return (
     <div
       className={clsx(
-        `w-full flex flex-col lg:flex-row justify-between items-center px-4 md:px-10 py-4 md:mb-10 bg-white transition-all duration-300 lg:sticky lg:top-0 lg:z-50`,
+        `w-full flex flex-col lg:flex-row justify-between items-center px-4 md:px-10 py-5 md:mb-10 bg-white transition-all duration-300 lg:sticky lg:top-0 lg:z-50`,
         { 'hidden md:flex': isProductPage },
         {
           // 'lg:sticky lg:top-0 lg:z-50': !isProductPage,
@@ -90,9 +88,7 @@ const Navbar = () => {
           {user ? (
             <>
               <Bell />
-              <Link href='/liked-products'>
-                <Heart />
-              </Link>
+              <NavLikeItem />
               <UserAvatar
                 user={user}
                 handleLogout={handleLogout}
@@ -150,9 +146,7 @@ const Navbar = () => {
         {user ? (
           <>
             <Bell />
-            <Link href='/liked-products'>
-              <Heart />
-            </Link>
+            <NavLikeItem />
             <UserAvatar
               user={user}
               handleLogout={handleLogout}
