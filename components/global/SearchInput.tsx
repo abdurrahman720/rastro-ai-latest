@@ -108,7 +108,7 @@ export const SearchInput = ({
         <Input
           disabled={isSearching}
           placeholder={`${placeholderSearch}`}
-          className='w-full border-black focus:border-none'
+          className='w-full text-base border-black lg:focus:border-none'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={handleKeyDown}

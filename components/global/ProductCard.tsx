@@ -240,6 +240,8 @@ const Buttons = ({ copied, product, copyLinkToClipboard, t }: any) => {
 
   const isLiked = likedProductsIds.includes(product?.id);
 
+  console.log({ product });
+
   return (
     <div className='flex justify-between items-center gap-2 px-2 py-3'>
       <div

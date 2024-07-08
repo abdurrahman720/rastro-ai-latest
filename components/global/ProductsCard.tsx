@@ -49,7 +49,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
           <div className='absolute bottom-2 right-2'>
             {isLiked ? (
               <Button
-                className='bg-[#FFE2E2] rounded-full px-1 w-8 h-8'
+                className='bg-[#828282] rounded-full px-1 w-8 h-8'
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -60,7 +60,7 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
               </Button>
             ) : (
               <Button
-                className='bg-[#FFE2E2] rounded-full px-1 w-8 h-8 text-[#ff3040]'
+                className='bg-[#aeaeae] rounded-full px-1 w-8 h-8'
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();

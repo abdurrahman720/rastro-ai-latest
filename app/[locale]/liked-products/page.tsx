@@ -20,7 +20,13 @@ export default function LikedProductsPage() {
   return (
     <div className='mx-auto'>
       <div className='px-5 md:px-10 '>
-        <Title title='Liked products' />
+        <Title
+          title={
+            likedProducts?.length > 0
+              ? 'Liked products'
+              : 'You don’t have any liked products'
+          }
+        />
         <ResponsiveMasonry columnsCountBreakPoints={breakPoints}>
           <Masonry gutter='10px'>
             {likedProducts?.map((item: any, index: number) => (
