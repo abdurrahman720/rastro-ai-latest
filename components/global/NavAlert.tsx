@@ -4,7 +4,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../ui/tooltip';
-import { Flag } from 'lucide-react';
+import { AlarmClock } from 'lucide-react';
 
 const NavAlert = () => {
   return (
@@ -12,7 +12,7 @@ const NavAlert = () => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Flag />
+            <AlarmClock className='w-[26px] h-[26px] cursor-pointer' />
           </TooltipTrigger>
           <TooltipContent>
             <p className='text-xs'>My Alerts</p>

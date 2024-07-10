@@ -9,7 +9,7 @@ const page_size = 30;
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | undefined };
 }) {
   let initialProducts = null;
 
@@ -25,7 +25,7 @@ export default async function Home({
 
   return (
     <div className='px-5 md:px-10'>
-      <SearchAlert />
+      {searchParams.search && <SearchAlert search={searchParams.search} />}
       <Products initialProducts={initialProducts} />
     </div>
   );
