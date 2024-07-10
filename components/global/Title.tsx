@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 const Title = ({ title }: { title: string }) => {
   return (
-    <h1 className={cn('text-xl pb-6 font-medium', inter.className)}>{title}</h1>
+    <h1 className={cn('text-xl font-medium', inter.className)}>{title}</h1>
   );
 };
 

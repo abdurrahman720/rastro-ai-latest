@@ -18,8 +18,8 @@ export default function LikedProductsPage() {
   };
 
   return (
-    <div className='mx-auto'>
-      <div className='px-5 md:px-10 '>
+    <div className='px-5 md:px-10 '>
+      <div className='pb-6'>
         <Title
           title={
             likedProducts?.length > 0
@@ -27,14 +27,14 @@ export default function LikedProductsPage() {
               : 'You don’t have any liked products'
           }
         />
-        <ResponsiveMasonry columnsCountBreakPoints={breakPoints}>
-          <Masonry gutter='10px'>
-            {likedProducts?.map((item: any, index: number) => (
-              <ProductsCard key={item.id} product={item} />
-            ))}
-          </Masonry>
-        </ResponsiveMasonry>
       </div>
+      <ResponsiveMasonry columnsCountBreakPoints={breakPoints}>
+        <Masonry gutter='10px'>
+          {likedProducts?.map((item: any, index: number) => (
+            <ProductsCard key={item.id} product={item} />
+          ))}
+        </Masonry>
+      </ResponsiveMasonry>
     </div>
   );
 }

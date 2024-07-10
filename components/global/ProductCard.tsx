@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 
 import { toast } from 'sonner';
 import { useAppContext } from '@/providers/context/context';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog-img';
 import moment from 'moment';
 
 const ProductCard = ({ product }: any) => {

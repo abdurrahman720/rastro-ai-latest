@@ -1,9 +1,6 @@
 'use client';
 import { Button } from '../ui/button';
-import { Bell } from 'lucide-react';
-
 import { useEffect, useState } from 'react';
-
 import { useAppContext } from '@/providers/context/context';
 import { useTranslation } from 'react-i18next';
 import { usePathname, useRouter } from 'next/navigation';
@@ -16,6 +13,7 @@ import { LanguageSelect } from './LanguageSelect';
 import { SearchInput } from './SearchInput';
 import { UserDropdownMenu } from './UserDropdownMenu';
 import NavLikeItem from './NavLikeItem';
+import NavAlert from './NavAlert';
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -87,7 +85,7 @@ const Navbar = () => {
         <div className='lg:hidden flex items-center gap-2'>
           {user ? (
             <>
-              <Bell />
+              <NavAlert />
               <NavLikeItem />
               <UserAvatar
                 user={user}
@@ -145,7 +143,7 @@ const Navbar = () => {
       <div className='hidden lg:flex w-full lg:w-auto lg:flex-1 justify-end items-center gap-5 mt-4 lg:mt-0'>
         {user ? (
           <>
-            <Bell />
+            <NavAlert />
             <NavLikeItem />
             <UserAvatar
               user={user}
