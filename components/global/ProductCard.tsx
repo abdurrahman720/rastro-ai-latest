@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
@@ -150,8 +151,14 @@ const ProductCard = ({ product }: any) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className='absolute top-1/2 left-2 z-20' />
-          <CarouselNext className='absolute top-1/2 right-2 z-20' />
+
+          <div className='hidden lg:block'>
+            <CarouselPrevious className='absolute top-1/2 left-2 z-20' />
+            <CarouselNext className='absolute top-1/2 right-2 z-20' />
+          </div>
+          <div className='block lg:hidden'>
+            <CarouselDots />
+          </div>
         </Carousel>
 
         <div className='block lg:hidden'>
@@ -239,8 +246,6 @@ const Buttons = ({ copied, product, copyLinkToClipboard, t }: any) => {
   const { handleLinkUnlike, likedProductsIds } = useAppContext();
 
   const isLiked = likedProductsIds.includes(product?.id);
-
-  console.log({ product });
 
   return (
     <div className='flex justify-between items-center gap-2 px-2 py-3'>

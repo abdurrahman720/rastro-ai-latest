@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppContext } from '@/providers/context/context';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 type Props = {
   product: any;
@@ -27,6 +28,9 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
     currentLocale === 'fr' ? product.title_french : product.title;
 
   const isLiked = likedProductsIds.includes(product?.id);
+
+  const currentPathname = usePathname();
+  const isLikedPage = currentPathname.includes('liked-products');
 
   return (
     <Link href={`/product/${product.id}`} prefetch={true} ref={lastElRef}>
@@ -85,16 +89,18 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
 
         <p className='my-2 text-start font-semibold text-sm'>{productTitle}</p>
 
-        <span
-          style={{
-            backgroundColor: isLessThan24 ? '#FFE2E2' : '#F6F6FF',
-          }}
-          className='text-sm px-3 py-1.5 rounded-[20px]'
-        >
-          {moment(product?.closes_at).isSame(moment(), 'day')
-            ? `Today ${moment(product?.closes_at).format('h:mm A')}`
-            : moment(product?.closes_at).format('MMMM D, h:mm A')}
-        </span>
+        {isLikedPage && (
+          <span
+            style={{
+              backgroundColor: isLessThan24 ? '#FFE2E2' : '#F6F6FF',
+            }}
+            className='text-sm px-3 py-1.5 rounded-[20px]'
+          >
+            {moment(product?.closes_at).isSame(moment(), 'day')
+              ? `Today ${moment(product?.closes_at).format('h:mm A')}`
+              : moment(product?.closes_at).format('MMMM D, h:mm A')}
+          </span>
+        )}
       </div>
     </Link>
   );
