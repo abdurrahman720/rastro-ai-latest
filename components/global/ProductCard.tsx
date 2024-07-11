@@ -129,10 +129,10 @@ const ProductCard = ({ product }: any) => {
                       unoptimized
                       priority
                       onLoad={() => setImageLoading(false)}
-                      className={`max-h-[350px] md:max-h-[500px] h-full object-cover w-full lg:rounded-lg cursor-pointer`}
+                      className={`max-h-[350px] md:max-h-[500px] h-full object-contain sm:object-cover w-full lg:rounded-lg cursor-pointer`}
                     />
                   </DialogTrigger>
-                  <DialogContent className='!h-[70vh] md:!h-[80vh] md:max-w-[90vw] object-cover lg:max-w-[70vw] border-none'>
+                  <DialogContent className='h-full flex items-center md:!h-[80vh] md:max-w-[90vw] object-cover lg:max-w-[70vw] border-none'>
                     <Image
                       src={url}
                       alt={product?.title_french}

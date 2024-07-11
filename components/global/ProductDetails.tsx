@@ -7,11 +7,29 @@ import Products from './Products';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axiosInstance from '@/utils/axiosInstance';
+import { useAppContext } from '@/providers/context/context';
 
 const ProductDetails = ({ product, suggestions, productId }: any) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
+  const { user } = useAppContext();
   // const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    if (user && user.uid) {
+      const storedDataString = localStorage.getItem('userProductIds');
+      const storedData = storedDataString ? JSON.parse(storedDataString) : {};
+
+      if (!storedData[user.uid]) {
+        storedData[user.uid] = [];
+      }
+
+      if (!storedData[user.uid].includes(productId)) {
+        storedData[user.uid].push(productId);
+        localStorage.setItem('userProductIds', JSON.stringify(storedData));
+      }
+    }
+  }, [productId, user]);
 
   useEffect(() => {
     // const getSuggestions = async () => {
