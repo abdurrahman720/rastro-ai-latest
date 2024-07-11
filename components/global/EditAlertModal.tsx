@@ -61,6 +61,7 @@ export const EditAlertModal = ({
   inputs,
   setInputs,
   onConfirmDete,
+  searchParams,
 }: any) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -146,7 +147,12 @@ export const EditAlertModal = ({
           </div>
         </div>
         <div className='pt-6 space-x-2 flex items-center justify-end w-full'>
-          <Button disabled={loading} variant='outline' onClick={onConfirmDete}>
+          <Button
+            disabled={loading}
+            variant='outline'
+            type='button'
+            onClick={() => onConfirmDete(searchParams?.id)}
+          >
             Delete Alert
           </Button>
           <Button disabled={loading} className='bg-[#0817EC]' type='submit'>

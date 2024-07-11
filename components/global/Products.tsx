@@ -48,6 +48,8 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
     try {
       const res = await axiosInstance.get(url);
 
+      console.log({ res });
+
       if (res.status === 200) {
         const newProducts = res.data;
 

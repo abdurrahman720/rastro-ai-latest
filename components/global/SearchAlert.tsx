@@ -1,18 +1,27 @@
 'use client';
 
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Title from './Title';
 import { AlarmClock, Edit2 } from 'lucide-react';
 import { AddAlertModal } from './AddAlertModal';
 import { toast } from 'sonner';
 import api from '@/utils/axiosInstance';
-import { AppContext } from '@/providers/context/context';
+import { useAppContext } from '@/providers/context/context';
 import { EditAlertModal } from './EditAlertModal';
+import { useRouter } from 'next/navigation';
 
 const SearchAlert = ({ searchParams }: { searchParams: any }) => {
-  const { user, handleLogin } = useContext(AppContext);
+  const {
+    user,
+    handleLogin,
+    open,
+    setOpen,
+    handleOpenAlert,
+    refetchAlerts,
+    setRefetchAlerts,
+  } = useAppContext();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
   const [openEditAlert, setOpenEditAlert] = useState(false);
   const [inputs, setInputs] = useState({
     title: searchParams?.search || '',
@@ -26,9 +35,9 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
     try {
       setLoading(true);
       console.log({ inputs });
-      const response = await api.post(`/user/alert_configs`, inputs);
+      const response = await api.post(`/user/alert_configs/`, inputs);
       console.log({ response });
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success('Alert saved!', {
           position: 'top-center',
         });
@@ -38,9 +47,15 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
     } catch (error: any) {
       setLoading(false);
       console.log(error);
-      toast.error(error.message || `Something went wrong!`, {
-        position: 'top-center',
-      });
+      if (error.response.status === 409) {
+        toast.error(error.response.data.error || `Something went wrong!`, {
+          position: 'top-center',
+        });
+      } else {
+        toast.error(error.message || `Something went wrong!`, {
+          position: 'top-center',
+        });
+      }
     }
   };
   const onConfirmEdit = async (e: any) => {
@@ -49,7 +64,7 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
       setLoading(true);
       console.log({ inputs });
       const response = await api.put(`/user/alert-configs/123`, inputs);
-      console.log({ response });
+
       if (response.status === 200) {
         toast.success('Alert updated!', {
           position: 'top-center',
@@ -60,21 +75,23 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
     } catch (error: any) {
       setLoading(false);
       console.log(error);
+
       toast.error(error.message || `Something went wrong!`, {
         position: 'top-center',
       });
     }
   };
-  const onConfirmDete = async (e: any) => {
-    e.preventDefault();
+  const onConfirmDete = async (id: any) => {
     try {
       setLoading(true);
-      const response = await api.delete(`/user/alert-configs/123`);
+      const response = await api.delete(`/user/alert-configs/${id}`);
 
       if (response.status === 200) {
         toast.success('Alert deleted!', {
           position: 'top-center',
         });
+        setRefetchAlerts(!refetchAlerts);
+        router.push('/');
         setOpenEditAlert(false);
         setLoading(false);
       }
@@ -87,13 +104,6 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
     }
   };
 
-  const handleOpenAlert = () => {
-    if (!user) {
-      return handleLogin();
-    }
-
-    setOpen(true);
-  };
   const handleOpenEditAlert = () => {
     if (!user) {
       return handleLogin();
@@ -139,7 +149,7 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
         onConfirm={onConfirmEdit}
         onConfirmDete={onConfirmDete}
         loading={loading}
-        search={searchParams?.search}
+        searchParams={searchParams}
         inputs={inputs}
         setInputs={setInputs}
       />

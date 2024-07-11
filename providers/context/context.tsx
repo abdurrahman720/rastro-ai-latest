@@ -37,6 +37,9 @@ function Context({ children }: { children: React.ReactNode }) {
   const [likedProducts, setLikedProducts] = useState<any>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [refetchProducts, setRefetchProducts] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const [alerts, setAlerts] = useState([]);
+  const [refetchAlerts, setRefetchAlerts] = useState<boolean>(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -128,6 +131,18 @@ function Context({ children }: { children: React.ReactNode }) {
     getLikedProducts();
   }, [refetchProducts]);
 
+  useEffect(() => {
+    const getAlerts = async () => {
+      try {
+        const response = await api.get(`/user/alert_configs`);
+        setAlerts(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAlerts();
+  }, [refetchAlerts]);
+
   const handleLinkUnlike = async (isLiked: boolean, id: string | number) => {
     if (!user) {
       return handleLogin();
@@ -156,6 +171,14 @@ function Context({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const handleOpenAlert = () => {
+    if (!user) {
+      return handleLogin();
+    }
+
+    setOpen(true);
+  };
+
   const likedProductsIds = likedProducts.map((prod: any) => prod.id);
 
   return (
@@ -178,6 +201,12 @@ function Context({ children }: { children: React.ReactNode }) {
         refetchProducts,
         handleLinkUnlike,
         likedProductsIds,
+        open,
+        setOpen,
+        handleOpenAlert,
+        refetchAlerts,
+        setRefetchAlerts,
+        alerts,
       }}
     >
       {children}

@@ -1,11 +1,4 @@
-import {
-  CreditCard,
-  Keyboard,
-  PlusCircle,
-  Settings,
-  User,
-  AlarmClock,
-} from 'lucide-react';
+import { PlusCircle, AlarmClock } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -14,22 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { useAppContext } from '@/providers/context/context';
 
 export function AlertDropdown() {
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-
-  const alerts = [
-    'Mid-century modern chairs',
-    'Space age lamps',
-    '19th century art',
-    'Rare dish-ware',
-  ];
+  const { handleOpenAlert, alerts } = useAppContext();
 
   return (
     <DropdownMenu>
@@ -40,15 +23,22 @@ export function AlertDropdown() {
         <DropdownMenuLabel>Alerts</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {alerts.map((alert, i) => (
-            <DropdownMenuItem key={i}>
-              <a href={`/?search=${alert.toString()}&alert=true`}>{alert}</a>
-            </DropdownMenuItem>
-          ))}
+          {alerts?.map(
+            ({ title, id }: { title: string; id: number }, i: number) => (
+              <DropdownMenuItem key={i} className='cursor-pointer'>
+                <a
+                  className='truncate'
+                  href={`/?search=${title.toString()}&id=${id}&alert=true`}
+                >
+                  {title}
+                </a>
+              </DropdownMenuItem>
+            )
+          )}
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleOpenAlert} className='cursor-pointer'>
           <span>Add an alert</span>
           <PlusCircle className='ml-2 h-4 w-4' />
         </DropdownMenuItem>
