@@ -11,6 +11,8 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
+  console.log({ searchParams });
+
   let initialProducts = null;
 
   try {
@@ -25,7 +27,7 @@ export default async function Home({
 
   return (
     <div className='px-5 md:px-10'>
-      {searchParams.search && <SearchAlert search={searchParams.search} />}
+      {searchParams.search && <SearchAlert searchParams={searchParams} />}
       <Products initialProducts={initialProducts} />
     </div>
   );

@@ -86,6 +86,7 @@ const Navbar = () => {
           {user ? (
             <>
               <NavAlert />
+
               <NavLikeItem />
               <UserAvatar
                 user={user}

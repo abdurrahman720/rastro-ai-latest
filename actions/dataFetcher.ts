@@ -30,6 +30,9 @@ export async function getProducts(
   page_size: string | number,
   searchQuery: string = ''
 ) {
+
+  console.log({searchQuery})
+
   const res = await fetch(
     `${BASE_URL}/products?page=${page}&page_size=${page_size}&query=${searchQuery}`,
     { next: { revalidate: 30 } }

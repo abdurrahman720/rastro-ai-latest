@@ -4,22 +4,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../ui/tooltip';
-import { AlarmClock } from 'lucide-react';
+import { AlertDropdown } from './AlertDropdown';
 
 const NavAlert = () => {
   return (
-    <div>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <AlarmClock className='w-[26px] h-[26px] cursor-pointer' />
-          </TooltipTrigger>
-          <TooltipContent>
-            <p className='text-xs'>My Alerts</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <AlertDropdown />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className='text-xs'>My Alerts</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
