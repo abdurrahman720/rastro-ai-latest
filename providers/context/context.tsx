@@ -40,6 +40,7 @@ function Context({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [refetchAlerts, setRefetchAlerts] = useState<boolean>(false);
+  const [productClicks, setProductClicks] = useState(0); // Controls the login modal.
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -70,6 +71,7 @@ function Context({ children }: { children: React.ReactNode }) {
       console.error('Login error:', error);
     }
   };
+
 
   const handleLogout = async () => {
     try {
@@ -132,6 +134,14 @@ function Context({ children }: { children: React.ReactNode }) {
   }, [refetchProducts]);
 
   useEffect(() => {
+    // Trigger login modal if 3 product clicks and user not logged in
+    if (productClicks >= 3 && !user) {
+      handleLogin();
+      setProductClicks(0); // Reset product clicks after showing login modal
+    }
+  }, [productClicks, user]);
+
+  useEffect(() => {
     const getAlerts = async () => {
       try {
         const response = await api.get(`/user/alert_configs`);
@@ -187,6 +197,8 @@ function Context({ children }: { children: React.ReactNode }) {
         handleLogin,
         handleLogout,
         user,
+        productClicks,
+        setProductClicks,
         loadingUser,
         searchQuery,
         setSearchQuery,
