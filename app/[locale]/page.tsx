@@ -11,8 +11,7 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  console.log({ searchParams });
-
+  console.log({ searchParams }); 
   let initialProducts = null;
 
   try {
