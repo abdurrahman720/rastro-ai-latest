@@ -9,6 +9,10 @@ import api from '@/utils/axiosInstance';
 import { useAppContext } from '@/providers/context/context';
 import { EditAlertModal } from './EditAlertModal';
 import { useRouter } from 'next/navigation';
+import { CategoryFilter } from './CategoryFilter';
+import { YearFilter } from './YearFilter';
+import { CountryFilter } from './CountryFilter';
+import { Button } from '../ui/button';
 
 const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   const {
@@ -29,6 +33,8 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
     frequency: 'D',
     country_of_sale: 'Any',
   });
+
+  console.log({ inputs });
 
   const onConfirm = async (e: any) => {
     e.preventDefault();
@@ -60,47 +66,55 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   };
   const onConfirmEdit = async (e: any) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      console.log({ inputs });
-      const response = await api.put(`/user/alert-configs/123`, inputs);
+    if (searchParams?.id) {
+      try {
+        setLoading(true);
 
-      if (response.status === 200) {
-        toast.success('Alert updated!', {
+        const response = await api.put(
+          `/user/alert-configs/${searchParams?.id}`,
+          inputs
+        );
+
+        if (response.status === 200) {
+          setRefetchAlerts(!refetchAlerts);
+          toast.success('Alert updated!', {
+            position: 'top-center',
+          });
+          setOpenEditAlert(false);
+          setLoading(false);
+        }
+      } catch (error: any) {
+        setLoading(false);
+        console.log(error);
+
+        toast.error(error.message || `Something went wrong!`, {
           position: 'top-center',
         });
-        setOpenEditAlert(false);
-        setLoading(false);
       }
-    } catch (error: any) {
-      setLoading(false);
-      console.log(error);
-
-      toast.error(error.message || `Something went wrong!`, {
-        position: 'top-center',
-      });
     }
   };
   const onConfirmDete = async (id: any) => {
-    try {
-      setLoading(true);
-      const response = await api.delete(`/user/alert-configs/${id}`);
+    if (searchParams?.id) {
+      try {
+        setLoading(true);
+        const response = await api.delete(`/user/alert-configs/${id}/`);
 
-      if (response.status === 200) {
-        toast.success('Alert deleted!', {
+        if (response.status === 200) {
+          toast.success('Alert deleted!', {
+            position: 'top-center',
+          });
+          setRefetchAlerts(!refetchAlerts);
+          router.push('/');
+          setOpenEditAlert(false);
+          setLoading(false);
+        }
+      } catch (error: any) {
+        setLoading(false);
+        console.log(error);
+        toast.error(error.message || `Something went wrong!`, {
           position: 'top-center',
         });
-        setRefetchAlerts(!refetchAlerts);
-        router.push('/');
-        setOpenEditAlert(false);
-        setLoading(false);
       }
-    } catch (error: any) {
-      setLoading(false);
-      console.log(error);
-      toast.error(error.message || `Something went wrong!`, {
-        position: 'top-center',
-      });
     }
   };
 
@@ -132,6 +146,25 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
             Add alert
           </button>
         )}
+
+        <CategoryFilter />
+        <YearFilter />
+        <CountryFilter />
+
+        <Button
+          variant='outline'
+          size='sm'
+          className='h-[31px] px-3 text-xs rounded-[8px]'
+        >
+          Closes soon
+        </Button>
+        <Button
+          variant='outline'
+          size='sm'
+          className='h-[31px] px-3 text-xs rounded-[8px]'
+        >
+          Recently added
+        </Button>
       </div>
 
       <AddAlertModal
