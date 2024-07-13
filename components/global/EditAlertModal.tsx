@@ -12,46 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-
-const countries = [
-  'Any',
-  'Germany',
-  'Switzerland',
-  'Austria',
-  'Belgium',
-  'France',
-  'Ireland',
-  'Italy',
-  'Luxembourg',
-  'Netherlands',
-  'Portugal',
-  'Spain',
-  'United Kingdom',
-];
-const categories = [
-  'Furniture',
-  'Seating',
-  'Lighting',
-  'Porcelain',
-  'Faience',
-  'Other ceramics',
-  'Silverware',
-  'Glassware',
-  'Sculptures',
-  'Paintings',
-  'Graphic arts',
-  'Decorative arts',
-  'Mirrors',
-  'Architectural elements',
-  'Clocks & Watches',
-  'Jewelry',
-  'Textile art',
-  'Clothing',
-  'Collectibles',
-  'Religious & Ritual art',
-  'Militaria',
-  'Other',
-];
+import { categories, countries } from '@/utils/constants';
 
 export const EditAlertModal = ({
   isOpen,

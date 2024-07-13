@@ -10,34 +10,9 @@ import {
 import { Settings2 } from 'lucide-react';
 import { MobileFilterMenu } from './MobileFilterMenu';
 import { Checkbox } from '../ui/checkbox';
+import { mobileFilters } from '@/utils/constants';
 
 export function MobileSidebar() {
-  const mobileFilters = [
-    {
-      id: 'category',
-      name: 'Category',
-      type: 'accordion',
-    },
-    {
-      id: 'year',
-      name: 'Year of production',
-      type: 'accordion',
-    },
-    {
-      id: 'country',
-      name: 'Country of sale',
-      type: 'accordion',
-    },
-    {
-      name: 'Closes soon',
-      type: 'checkbox',
-    },
-    {
-      name: 'Recently added',
-      type: 'checkbox',
-    },
-  ];
-
   return (
     <Sheet>
       <SheetTrigger asChild>

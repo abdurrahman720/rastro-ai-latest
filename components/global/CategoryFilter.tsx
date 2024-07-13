@@ -12,53 +12,7 @@ import {
 import { CategoryMenu } from './CategoryMenu';
 import { Button } from '../ui/button';
 import { ChevronDown } from 'lucide-react';
-
-export const categories = [
-  {
-    category: 'Furniture 2',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 3',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-];
+import { categoriesFilter } from '@/utils/constants';
 
 export function CategoryFilter() {
   return (
@@ -75,7 +29,7 @@ export function CategoryFilter() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-[300px] p-4'>
         <DropdownMenuGroup className='max-h-[500px] overflow-y-auto'>
-          {categories.map((category, i) => (
+          {categoriesFilter.map((category, i) => (
             <DropdownMenuItem
               onClick={(e) => {
                 e.preventDefault();

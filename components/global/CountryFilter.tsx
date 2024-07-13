@@ -11,24 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { ChevronDown } from 'lucide-react';
-import { Checkbox } from '../ui/checkbox';
 import CountryMenu from './CountryMenu';
-
-export const countries = [
-  'Any',
-  'Germany',
-  'Switzerland',
-  'Austria',
-  'Belgium',
-  'France',
-  'Ireland',
-  'Italy',
-  'Luxembourg',
-  'Netherlands',
-  'Portugal',
-  'Spain',
-  'United Kingdom',
-];
+import { countries } from '@/utils/constants';
 
 export function CountryFilter() {
   return (
