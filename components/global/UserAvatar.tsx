@@ -13,6 +13,7 @@ import {
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { LogOut } from 'lucide-react';
+import { FaUserCircle } from 'react-icons/fa';
 
 export const UserAvatar = ({
   user,
@@ -25,17 +26,20 @@ export const UserAvatar = ({
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className='w-[44px] h-[44px] rounded-full relative'>
-          <Image
-            src={user?.photoURL}
-            alt='user'
-            fill
-            className='rounded-full'
-          />
+          {user?.photoURL ? (
+            <Image
+              src={user.photoURL}
+              alt='user'
+              fill
+              className='rounded-full'
+            />
+          ) : (
+            <FaUserCircle className='w-[44px] h-[44px] text-gray-400' />
+          )}
         </Button>
       </DropdownMenuTrigger>
 

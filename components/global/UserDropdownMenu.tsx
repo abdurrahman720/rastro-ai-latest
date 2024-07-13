@@ -15,7 +15,7 @@ import { Ellipsis, LogOut } from 'lucide-react';
 export const UserDropdownMenu = ({
   user,
   handleLogout,
-  handleLogin,
+  handleSignupOrLogin,
   t,
   handleLangChange,
 }: any) => {
@@ -50,7 +50,7 @@ export const UserDropdownMenu = ({
               </span>
             </DropdownMenuItem>
           ) : (
-            <DropdownMenuItem className='block lg:hidden' onClick={handleLogin}>
+            <DropdownMenuItem className='block lg:hidden' onClick={handleSignupOrLogin}>
               <span className='text-sm font-semibold'> {t('login')}</span>
             </DropdownMenuItem>
           )}
