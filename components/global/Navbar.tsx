@@ -23,7 +23,7 @@ const Navbar = () => {
   const currentPathname = usePathname();
   const isProductPage = currentPathname.includes('product/');
 
-  const { user, handleLogin, handleLogout } = useAppContext();
+  const { user, handleSignupOrLogin, handleLogout } = useAppContext();
   const [img, setImg] = useState<Blob | MediaSource | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -100,14 +100,14 @@ const Navbar = () => {
               <UserDropdownMenu
                 user={user}
                 handleLogout={handleLogout}
-                handleLogin={handleLogin}
+                handleSignupOrLogin={handleSignupOrLogin}
                 t={t}
                 handleLangChange={handleLangChange}
               />
               {/* <Button
                 variant='default'
                 className={'px-[12px] py-[9px]'}
-                onClick={handleLogin}
+                onClick={handleSignupOrLogin}
               >
                 {t('login')}
               </Button>
@@ -158,7 +158,7 @@ const Navbar = () => {
             <Button
               variant='default'
               className={'px-[12px] py-[9px]'}
-              onClick={handleLogin}
+              onClick={handleSignupOrLogin}
             >
               {t('login')}
             </Button>

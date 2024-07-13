@@ -1,13 +1,12 @@
 'use client';
 
 import { getProducts } from '@/actions/dataFetcher';
+import AuthModal from '@/components/global/AuthModal';
 import { auth } from '@/firebase/firebase';
 import api from '@/utils/axiosInstance';
 import axiosInstance from '@/utils/axiosInstance';
 import {
   onAuthStateChanged,
-  signInWithPopup,
-  GoogleAuthProvider,
   signOut,
 } from 'firebase/auth';
 import { redirect, usePathname, useRouter } from 'next/navigation';
@@ -37,9 +36,11 @@ function Context({ children }: { children: React.ReactNode }) {
   const [likedProducts, setLikedProducts] = useState<any>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [refetchProducts, setRefetchProducts] = useState<boolean>(false);
-  const [open, setOpen] = useState(false);
+  const [openSearchAlert, setOpenSearchAlert] = useState(false);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [refetchAlerts, setRefetchAlerts] = useState<boolean>(false);
+  const [productClicks, setProductClicks] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -63,11 +64,9 @@ function Context({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch (error) {
-      console.error('Login error:', error);
+  const handleSignupOrLogin = async () => {
+    if (!user) {
+      setOpenAuthModal(true);
     }
   };
 
@@ -132,6 +131,14 @@ function Context({ children }: { children: React.ReactNode }) {
   }, [refetchProducts]);
 
   useEffect(() => {
+    // Trigger login modal if 3 product clicks and user not logged in
+    if (productClicks >= 3 && !user) {
+      handleSignupOrLogin();
+      setProductClicks(0); // Reset product clicks after showing login modal
+    }
+  }, [productClicks, user]);
+
+  useEffect(() => {
     const getAlerts = async () => {
       try {
         const response = await api.get(`/user/alert_configs`);
@@ -145,7 +152,7 @@ function Context({ children }: { children: React.ReactNode }) {
 
   const handleLinkUnlike = async (isLiked: boolean, id: string | number) => {
     if (!user) {
-      return handleLogin();
+      return handleSignupOrLogin();
     }
 
     if (isLiked) {
@@ -173,10 +180,10 @@ function Context({ children }: { children: React.ReactNode }) {
 
   const handleOpenAlert = () => {
     if (!user) {
-      return handleLogin();
+      return handleSignupOrLogin();
     }
 
-    setOpen(true);
+    setOpenSearchAlert(true);
   };
 
   const likedProductsIds = likedProducts.map((prod: any) => prod.id);
@@ -184,9 +191,13 @@ function Context({ children }: { children: React.ReactNode }) {
   return (
     <AppContext.Provider
       value={{
-        handleLogin,
+        handleSignupOrLogin,
         handleLogout,
+        openAuthModal,
+        setOpenAuthModal,
         user,
+        productClicks,
+        setProductClicks,
         loadingUser,
         searchQuery,
         setSearchQuery,
@@ -201,14 +212,15 @@ function Context({ children }: { children: React.ReactNode }) {
         refetchProducts,
         handleLinkUnlike,
         likedProductsIds,
-        open,
-        setOpen,
+        openSearchAlert,
+        setOpenSearchAlert,
         handleOpenAlert,
         refetchAlerts,
         setRefetchAlerts,
         alerts,
       }}
     >
+      <AuthModal />
       {children}
     </AppContext.Provider>
   );
