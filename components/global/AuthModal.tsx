@@ -333,15 +333,15 @@ const AuthModal: React.FC<{}> = () => {
           <section style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-left', flexGrow: 0, marginTop: '40px', padding: '0 24px' }}>
             <p style={{ fontFamily: 'Inter', color: '#74767e', fontSize: '12px', display: 'block', unicodeBidi: 'isolate' }}>
               {'By joining, you agree to our '}
-              <a href="/terms_of_service" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
+              <a href="/terms-of-use/" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
                 {'Terms of Service'}
               </a>
               {'. Read our '}
-              <a href="/privacy-policy" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
+              <a href="/privacy/" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
                 {' Privacy Policy'}
               </a>
               {' to learn about data usage. Learn more '}
-              <a href="/about" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
+              <a href="//getrastro.app" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
                 {' About us.'}
               </a>
             </p>
