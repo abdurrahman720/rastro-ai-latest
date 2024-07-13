@@ -275,7 +275,7 @@ const Buttons = ({ copied, product, copyLinkToClipboard, t }: any) => {
                 return 'Interencheres';
               case 'drouot':
                 return 'Drouot';
-              case 'auctionet':
+              case 'auctionnet':
                 return 'Auctionet';
               case 'saleroom':
                 return 'Saleroom';
