@@ -8,14 +8,9 @@ import { Checkbox } from '../ui/checkbox';
 
 export function FilterSubmenu({ category }: any) {
   return (
-    <Accordion
-      type='single'
-      collapsible
-      tabIndex={0}
-      className='w-full group-focus-within:bg-red-500'
-    >
+    <Accordion type='single' collapsible tabIndex={0} className='w-full'>
       <AccordionItem value={`item-${category.category}`}>
-        <AccordionTrigger className='text-base'>
+        <AccordionTrigger className='text-sm lg:text-base'>
           {category.category}
         </AccordionTrigger>
         <AccordionContent className='flex flex-col gap-3 py-3'>

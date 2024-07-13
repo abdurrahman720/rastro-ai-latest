@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Title from './Title';
-import { AlarmClock, Edit2 } from 'lucide-react';
+import { AlarmClock, Edit2, Settings2 } from 'lucide-react';
 import { AddAlertModal } from './AddAlertModal';
 import { toast } from 'sonner';
 import api from '@/utils/axiosInstance';
@@ -13,6 +13,7 @@ import { CategoryFilter } from './CategoryFilter';
 import { YearFilter } from './YearFilter';
 import { CountryFilter } from './CountryFilter';
 import { Button } from '../ui/button';
+import { MobileFilterMenu } from './MobileFilterMenu';
 
 const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   const {
@@ -127,7 +128,7 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   };
   return (
     <>
-      <div className='flex gap-3 items-center pb-6'>
+      <div className='flex flex-wrap gap-3 items-center pb-6'>
         <Title title={`‘${searchParams?.search}’`} />
         {Boolean(searchParams?.alert) ? (
           <button
@@ -147,24 +148,27 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
           </button>
         )}
 
-        <CategoryFilter />
-        <YearFilter />
-        <CountryFilter />
+        <MobileFilterMenu />
+        <div className='hidden lg:flex flex-wrap gap-3 '>
+          <CategoryFilter />
+          <YearFilter />
+          <CountryFilter />
 
-        <Button
-          variant='outline'
-          size='sm'
-          className='h-[31px] px-3 text-xs rounded-[8px]'
-        >
-          Closes soon
-        </Button>
-        <Button
-          variant='outline'
-          size='sm'
-          className='h-[31px] px-3 text-xs rounded-[8px]'
-        >
-          Recently added
-        </Button>
+          <Button
+            variant='outline'
+            size='sm'
+            className='h-[31px] px-3 text-xs rounded-[8px]'
+          >
+            Closes soon
+          </Button>
+          <Button
+            variant='outline'
+            size='sm'
+            className='h-[31px] px-3 text-xs rounded-[8px]'
+          >
+            Recently added
+          </Button>
+        </div>
       </div>
 
       <AddAlertModal
