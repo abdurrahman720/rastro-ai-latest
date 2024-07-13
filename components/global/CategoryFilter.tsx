@@ -28,7 +28,7 @@ export function CategoryFilter() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-[300px] p-4'>
-        <DropdownMenuGroup className='max-h-[500px] overflow-y-auto'>
+        <DropdownMenuGroup className='max-h-[500px] overflow-y-auto no-scrollbar'>
           {categoriesFilter.map((category, i) => (
             <DropdownMenuItem
               onClick={(e) => {

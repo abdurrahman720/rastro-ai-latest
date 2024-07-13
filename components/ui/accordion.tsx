@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { ChevronDown, Plus } from 'lucide-react';
+import { ChevronDown, Minus, Plus } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -22,9 +22,14 @@ AccordionItem.displayName = 'AccordionItem';
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+  any
 >(({ className, children, type, ...props }, ref) => {
-  console.log({ ref });
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <AccordionPrimitive.Header className='flex'>
       <AccordionPrimitive.Trigger
@@ -33,13 +38,20 @@ const AccordionTrigger = React.forwardRef<
           'flex flex-1 items-center justify-between py-1 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
           className
         )}
+        onClick={handleClick}
         {...props}
       >
         {children}
         {type === 'category' ? (
           <ChevronDown className='h-4 w-4 shrink-0 transition-transform duration-200' />
         ) : (
-          <Plus className='h-4 w-4 shrink-0 transition-transform duration-200 ' />
+          <>
+            {isOpen ? (
+              <Minus className='h-4 w-4 shrink-0 transition-transform duration-200' />
+            ) : (
+              <Plus className='h-4 w-4 shrink-0 transition-transform duration-200' />
+            )}
+          </>
         )}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>

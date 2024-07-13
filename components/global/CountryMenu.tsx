@@ -3,14 +3,16 @@ import { Checkbox } from '../ui/checkbox';
 
 const CountryMenu = ({ country }: any) => {
   return (
-    <div className='flex items-center gap-3  cursor-pointer'>
+    <div
+      className='flex items-center gap-3  cursor-pointer'
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <Checkbox id={`${country}`} className='w-[17px] h-[17px]' />
       <label
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
         htmlFor={`${country}`}
-        className='text-[15px] font-medium  cursor-pointer'
+        className='text-[15px] font-medium  cursor-pointer block'
       >
         {country}
       </label>

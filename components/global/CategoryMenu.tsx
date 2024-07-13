@@ -24,6 +24,9 @@ export function CategoryMenu({ category }: any) {
             <div
               className='flex items-center gap-3  cursor-pointer'
               key={index}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               <Checkbox id={`sub-${index + 1}`} className='w-[17px] h-[17px]' />
               <label

@@ -31,6 +31,7 @@ export function CountryFilter() {
         <DropdownMenuGroup className='max-h-[500px] overflow-y-auto'>
           {countries.map((country, i) => (
             <DropdownMenuItem
+              role='label'
               onClick={(e) => {
                 e.preventDefault();
               }}

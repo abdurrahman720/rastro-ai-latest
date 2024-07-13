@@ -24,9 +24,6 @@ export const mobileFilters = [
   },
 ];
 
-
-
-
 export const countries = [
   'Any',
   'Germany',
@@ -67,50 +64,96 @@ export const categories = [
   'Other',
 ];
 
-
 export const categoriesFilter = [
   {
-    category: 'Furniture 2',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'Art',
+    subCategories: [
+      'Paintings',
+      'Sculptureand bronzes',
+      'Drawings watercolors and pastels',
+      'Photography',
+      'Posters',
+      'Prints and limited editions',
+    ],
   },
   {
-    category: 'Furniture 3',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'Furniture',
+    subCategories: [
+      'Table',
+      'Secretary desk and vanity',
+      'Bed and headboard',
+      'Sofa and bench',
+      'Chair and stool',
+      'Armchair',
+      'Pouf and footstool',
+      'Drawer',
+      'other',
+    ],
   },
   {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'Decoration',
+    subCategories: [
+      'Rugs and tapestries',
+      'Textiles and lace',
+      'Ceramics and porcelain',
+      'Tableware and goldsmithing',
+      'Clocks',
+      'Decorative objects',
+      'Lighting',
+      'Other',
+    ],
   },
   {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'Fashion and jewellery',
+    subCategories: [
+      'Bags',
+      'Clothing',
+      'Fashion accessories',
+      'Shoes',
+      'Jewellery',
+      'Diamonds and gemstones',
+      'Watches',
+      'Pens and lighters',
+    ],
   },
   {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'Collectibles',
+    subCategories: [
+      'Books manuscripts and comics',
+      'Historical memorabilia militaria and weapons',
+      'Toys and models',
+      'Music cinema and sports memorabilia',
+      'Coins',
+      'Stamps',
+      'Maps',
+      'Wine and spirits',
+      'Trading cards',
+    ],
   },
   {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'Vehicles and equipment goods',
+    subCategories: [
+      'Sports and collection cars',
+      'Sports and collection motorcycles and scooters',
+      'Bicycles and sports equipment',
+      'Personal vehicles',
+      'Professional vehicles',
+      'It and telephony',
+      'Household appliances',
+      'Professional equipment',
+    ],
   },
   {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
-  },
-  {
-    category: 'Furniture 4',
-    subCategories: ['testtt', 'testtt', 'testtt', 'testtt', 'testtt', 'testtt'],
+    category: 'World art',
+    subCategories: [
+      'Africa',
+      'China',
+      'India',
+      'Islamic',
+      'Japan',
+      'South east asia',
+      'Oeania',
+      'Americas',
+    ],
   },
 ];
