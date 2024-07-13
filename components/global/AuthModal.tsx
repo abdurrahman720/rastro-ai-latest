@@ -195,6 +195,7 @@ const AuthModal: React.FC<{}> = () => {
     return failingRules.length > 0 ? failingRules.join(', ') : '';
   };
 
+
   return (
     openAuthModal ? (
       <div style={{
