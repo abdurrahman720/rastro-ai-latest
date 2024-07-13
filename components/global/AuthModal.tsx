@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
+import Image from 'next/image';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useAppContext } from '@/providers/context/context';
 import {
   signInWithPopup,
@@ -10,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { FirebaseError } from '@firebase/util';
 import { auth } from '@/firebase/firebase';
+import primaryLogo from '/public/logo/rastro-logo.jpg';
 
 const AuthModal: React.FC<{}> = () => {
   const { openAuthModal, setOpenAuthModal } = useAppContext();
@@ -223,6 +225,13 @@ const AuthModal: React.FC<{}> = () => {
           margin: '20px'
 
         }}>
+          <Image src={primaryLogo} alt='rastro-ai' style={{
+            top: '10px',
+            right: '10px',
+            width: '10%',
+            height: '10%',
+            marginBottom: '30px'
+          }} />
           <div style={{ gap: '20px', marginBottom: '20px' }}>
             <button style={{ width: '100%', padding: '12px', borderRadius: '5px', fontWeight: 'bold', backgroundColor: 'white', color: 'black', border: '2px solid #ccc', fontSize: '14px', display: 'flex', alignItems: 'center', position: 'relative' }} onClick={handleGoogleLogin}>
               <span style={{ position: 'absolute', left: '10px' }}>
@@ -321,6 +330,22 @@ const AuthModal: React.FC<{}> = () => {
               </div>
             </>
           )}
+          <section style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-left', flexGrow: 0, marginTop: '40px', padding: '0 24px' }}>
+            <p style={{ fontFamily: 'Inter', color: '#74767e', fontSize: '12px', display: 'block', unicodeBidi: 'isolate' }}>
+              {'By joining, you agree to our '}
+              <a href="/terms_of_service" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
+                {'Terms of Service'}
+              </a>
+              {'. Read our '}
+              <a href="/privacy-policy" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
+                {' Privacy Policy'}
+              </a>
+              {' to learn about data usage. Learn more '}
+              <a href="/about" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline', transition: 'all 0.2s ease-in-out' }}>
+                {' About us.'}
+              </a>
+            </p>
+          </section>
         </div>
       </div>
     ) : null
