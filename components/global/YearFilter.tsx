@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { ChevronDown } from 'lucide-react';
-import { Input } from '../ui/input';
+import YearRangeInput from './YearRangeInput';
 
 export function YearFilter() {
   return (
@@ -34,17 +34,9 @@ export function YearFilter() {
               e.preventDefault();
               e.stopPropagation();
             }}
-            className='focus:bg-white flex gap-2 items-center mb-3.5'
+            className='focus:bg-white'
           >
-            <Input />
-            {'-'}
-            <Input />
-          </DropdownMenuItem>
-          <DropdownMenuItem className='focus:bg-white flex gap-2'>
-            <Button className='flex-1' variant='outline'>
-              Clear all
-            </Button>
-            <Button className='flex-1'>Done</Button>
+            <YearRangeInput />
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { FilterSubmenu } from './FilterSubmenu';
+import { CategoryMenu } from './CategoryMenu';
 import { Button } from '../ui/button';
 import { ChevronDown } from 'lucide-react';
 
@@ -82,9 +82,9 @@ export function CategoryFilter() {
                 e.stopPropagation();
               }}
               key={i}
-              className='cursor-pointer focus:bg-white'
+              className='cursor-pointer focus:bg-white py-0'
             >
-              <FilterSubmenu category={category} />
+              <CategoryMenu category={category} />
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>

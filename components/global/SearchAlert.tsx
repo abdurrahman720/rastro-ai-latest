@@ -13,7 +13,7 @@ import { CategoryFilter } from './CategoryFilter';
 import { YearFilter } from './YearFilter';
 import { CountryFilter } from './CountryFilter';
 import { Button } from '../ui/button';
-import { MobileFilterMenu } from './MobileFilterMenu';
+import { MobileSidebar } from './MobileSidebar';
 
 const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   const {
@@ -148,7 +148,7 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
           </button>
         )}
 
-        <MobileFilterMenu />
+        <MobileSidebar />
         <div className='hidden lg:flex flex-wrap gap-3 '>
           <CategoryFilter />
           <YearFilter />

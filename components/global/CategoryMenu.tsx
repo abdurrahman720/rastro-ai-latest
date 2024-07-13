@@ -6,11 +6,17 @@ import {
 } from '@/components/ui/accordion';
 import { Checkbox } from '../ui/checkbox';
 
-export function FilterSubmenu({ category }: any) {
+export function CategoryMenu({ category }: any) {
   return (
     <Accordion type='single' collapsible tabIndex={0} className='w-full'>
-      <AccordionItem value={`item-${category.category}`}>
-        <AccordionTrigger className='text-sm lg:text-base'>
+      <AccordionItem
+        value={`item-${category.category}`}
+        className='border-none'
+      >
+        <AccordionTrigger
+          className='text-base font-semibold lg:font-medium'
+          type='category'
+        >
           {category.category}
         </AccordionTrigger>
         <AccordionContent className='flex flex-col gap-3 py-3'>

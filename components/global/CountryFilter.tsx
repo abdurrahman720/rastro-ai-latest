@@ -9,12 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { FilterSubmenu } from './FilterSubmenu';
 import { Button } from '../ui/button';
 import { ChevronDown } from 'lucide-react';
 import { Checkbox } from '../ui/checkbox';
+import CountryMenu from './CountryMenu';
 
-const countries = [
+export const countries = [
   'Any',
   'Germany',
   'Switzerland',
@@ -53,18 +53,7 @@ export function CountryFilter() {
               key={i}
               className='cursor-pointer'
             >
-              <div className='flex items-center gap-3  cursor-pointer'>
-                <Checkbox id={`${i + 1}`} className='w-[17px] h-[17px]' />
-                <label
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  htmlFor={`${i + 1}`}
-                  className='text-[15px] font-medium  cursor-pointer'
-                >
-                  {country}
-                </label>
-              </div>
+              <CountryMenu country={country} />
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
