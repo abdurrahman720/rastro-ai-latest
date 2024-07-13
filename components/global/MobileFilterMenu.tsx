@@ -4,11 +4,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { categories } from './CategoryFilter';
+
 import { CategoryMenu } from './CategoryMenu';
 import CountryMenu from './CountryMenu';
-import { countries } from './CountryFilter';
+
 import YearRangeInput from './YearRangeInput';
+import { categoriesFilter, countries } from '@/utils/constants';
 
 export function MobileFilterMenu({ filter }: any) {
   return (
@@ -20,7 +21,7 @@ export function MobileFilterMenu({ filter }: any) {
         <AccordionContent className='flex flex-col py-3'>
           {filter.id === 'category' && (
             <>
-              {categories.map((category, i) => (
+              {categoriesFilter.map((category, i) => (
                 <div
                   onClick={(e) => {
                     e.preventDefault();
