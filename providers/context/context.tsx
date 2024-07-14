@@ -10,7 +10,7 @@ import {
   GoogleAuthProvider,
   signOut,
 } from 'firebase/auth';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+
 import { createContext, useContext, useEffect, useState } from 'react';
 
 export type UserType = {
@@ -40,6 +40,7 @@ function Context({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [refetchAlerts, setRefetchAlerts] = useState<boolean>(false);
+  const [filterQueries, setFilterQueries] = useState<any>({});
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -207,6 +208,8 @@ function Context({ children }: { children: React.ReactNode }) {
         refetchAlerts,
         setRefetchAlerts,
         alerts,
+        setFilterQueries,
+        filterQueries,
       }}
     >
       {children}

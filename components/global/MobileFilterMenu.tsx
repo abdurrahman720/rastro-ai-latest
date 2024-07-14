@@ -8,7 +8,7 @@ import {
 import { CategoryMenu } from './CategoryMenu';
 import CountryMenu from './CountryMenu';
 
-import YearRangeInput from './YearRangeInput';
+import YearRangePicker from './YearRangePicker';
 import { categoriesFilter, countries } from '@/utils/constants';
 
 export function MobileFilterMenu({ filter }: any) {
@@ -51,7 +51,7 @@ export function MobileFilterMenu({ filter }: any) {
               ))}
             </>
           )}
-          {filter.id === 'year' && <YearRangeInput />}
+          {filter.id === 'year' && <YearRangePicker />}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

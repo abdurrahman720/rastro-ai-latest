@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Title from './Title';
-import { AlarmClock, Edit2, Settings2 } from 'lucide-react';
+import { AlarmClock, Edit2 } from 'lucide-react';
 import { AddAlertModal } from './AddAlertModal';
 import { toast } from 'sonner';
 import api from '@/utils/axiosInstance';
@@ -14,6 +14,7 @@ import { YearFilter } from './YearFilter';
 import { CountryFilter } from './CountryFilter';
 import { Button } from '../ui/button';
 import { MobileSidebar } from './MobileSidebar';
+import { YearRangeInput } from './YearRangeInput';
 
 const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   const {
@@ -34,8 +35,6 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
     frequency: 'D',
     country_of_sale: 'Any',
   });
-
-  console.log({ inputs });
 
   const onConfirm = async (e: any) => {
     e.preventDefault();
@@ -129,23 +128,27 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   return (
     <>
       <div className='flex flex-wrap gap-3 items-center pb-6'>
-        <Title title={`‘${searchParams?.search}’`} />
-        {Boolean(searchParams?.alert) ? (
-          <button
-            onClick={handleOpenEditAlert}
-            className='inline-flex items-center gap-1 bg-white border-[#EDF1F5] border-[1px] text-xs px-3 py-1.5 rounded-[20px]'
-          >
-            <Edit2 className='w-[14px] h-[14px]' />
-            Edit alert
-          </button>
-        ) : (
-          <button
-            onClick={handleOpenAlert}
-            className='inline-flex items-center gap-1 bg-[#E1E3FF] text-xs px-3 py-1.5 rounded-[20px]'
-          >
-            <AlarmClock className='w-[14px] h-[14px]' />
-            Add alert
-          </button>
+        {searchParams.search && (
+          <>
+            <Title title={`‘${searchParams?.search}’`} />
+            {Boolean(searchParams?.alert) ? (
+              <button
+                onClick={handleOpenEditAlert}
+                className='inline-flex items-center gap-1 bg-white border-[#EDF1F5] border-[1px] text-xs px-3 py-1.5 rounded-[20px]'
+              >
+                <Edit2 className='w-[14px] h-[14px]' />
+                Edit alert
+              </button>
+            ) : (
+              <button
+                onClick={handleOpenAlert}
+                className='inline-flex items-center gap-1 bg-[#E1E3FF] text-xs px-3 py-1.5 rounded-[20px]'
+              >
+                <AlarmClock className='w-[14px] h-[14px]' />
+                Add alert
+              </button>
+            )}
+          </>
         )}
 
         <MobileSidebar />

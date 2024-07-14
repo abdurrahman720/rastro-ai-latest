@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { ChevronDown } from 'lucide-react';
-import YearRangeInput from './YearRangeInput';
+import YearRangePicker from './YearRangePicker';
 
 export function YearFilter() {
   return (
@@ -28,17 +28,17 @@ export function YearFilter() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-[340px] p-4'>
         <DropdownMenuLabel>Enter a range</DropdownMenuLabel>
-        <DropdownMenuGroup className='max-h-[500px] overflow-y-auto'>
-          <DropdownMenuItem
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            className='focus:bg-white'
-          >
-            <YearRangeInput />
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          className='max-h-[500px] overflow-y-auto'
+        >
+          <div className='focus:bg-white'>
+            <YearRangePicker />
+          </div>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
