@@ -18,7 +18,8 @@ export default async function Home({
     initialProducts = await getProducts(
       1,
       page_size,
-      searchParams.search as string
+      searchParams.search as string,
+      searchParams.location_country as string
     );
   } catch (error: any) {
     console.log(error);

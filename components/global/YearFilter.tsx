@@ -26,15 +26,15 @@ export function YearFilter() {
           <ChevronDown className='w-4 h-4' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-[340px] p-4'>
+      <DropdownMenuContent
+        className='w-[340px] p-4'
+        // onClick={(e) => {
+        //   e.preventDefault();
+        //   e.stopPropagation();
+        // }}
+      >
         <DropdownMenuLabel>Enter a range</DropdownMenuLabel>
-        <div
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-          className='max-h-[500px] overflow-y-auto'
-        >
+        <div className='max-h-[500px] overflow-y-auto p-2'>
           <div className='focus:bg-white'>
             <YearRangePicker />
           </div>

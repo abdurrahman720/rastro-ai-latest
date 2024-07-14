@@ -40,6 +40,8 @@ function Context({ children }: { children: React.ReactNode }) {
   const [filterQueries, setFilterQueries] = useState<any>({});
   const [productRequests, setProductRequests] = useState(0);
 
+  console.log({ filterQueries });
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -81,7 +83,15 @@ function Context({ children }: { children: React.ReactNode }) {
     setIsSearching(true);
     setProductRequests(productRequests + 1);
     console.log('PRODUCTs REQUESTED!! Requests:', productRequests);
-    const searchedProducts = await getProducts(1, 21, searchQuery);
+    const searchedProducts = await getProducts(
+      1,
+      21,
+      searchQuery,
+      filterQueries.location_country
+    );
+
+    console.log({ searchedProducts });
+
     setProducts(searchedProducts);
     setIsSearching(false);
   };

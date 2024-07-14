@@ -19,29 +19,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-];
-
 export function YearRangeInput() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
@@ -51,24 +28,27 @@ export function YearRangeInput() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger className='w-full' asChild>
         <Button
           variant='outline'
           role='combobox'
           aria-expanded={open}
-          className='w-[200px] justify-between'
+          className=' justify-between w-full lg:w-[133px]'
         >
           {value
             ? yearOptions.find((year) => year === Number(value))
             : 'Select year...'}
-          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+          <ChevronsUpDown className='ml-1 h-4 w-4 opacity-50' />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[150px] p-0'>
         <Command>
-          <CommandInput placeholder='Search year...' />
+          <CommandInput
+            placeholder='Search year...'
+            className='pointer-events-auto'
+          />
           <CommandEmpty>No year found.</CommandEmpty>
-          <CommandGroup>
+          <CommandList>
             {yearOptions.map((year) => (
               <CommandItem
                 key={year}
@@ -87,7 +67,7 @@ export function YearRangeInput() {
                 {year}
               </CommandItem>
             ))}
-          </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

@@ -6,9 +6,13 @@ const YearRangePicker = () => {
   return (
     <div>
       <div className='flex gap-2 items-center mb-6'>
-        <YearRangeInput />
+        <div className='flex-1'>
+          <YearRangeInput />
+        </div>
         {'-'}
-        <YearRangeInput />
+        <div className='flex-1'>
+          <YearRangeInput />
+        </div>
       </div>
 
       <div className='flex gap-2'>

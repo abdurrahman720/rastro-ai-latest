@@ -1,7 +1,6 @@
 'use server';
 import api from '@/utils/axiosInstance';
 
-
 const BASE_URL = 'https://rastro-backend-4a9us.ondigitalocean.app/api';
 
 export async function getProduct(id: string) {
@@ -28,22 +27,42 @@ export async function getSuggestions(
 export async function getProducts(
   page: string | number,
   page_size: string | number,
-  searchQuery: string = ''
+  searchQuery: string = '',
+  country: string = ''
 ) {
+  console.log({ searchQuery });
 
-  console.log({searchQuery})
+  const queryParams = buildQueryParams({
+    page,
+    page_size,
+    query: searchQuery,
+    location_country: country,
+  });
 
-  const res = await fetch(
-    `${BASE_URL}/products?page=${page}&page_size=${page_size}&query=${searchQuery}`,
-    { next: { revalidate: 30 } }
-  );
+  const res = await fetch(`${BASE_URL}/products?${queryParams}`, {
+    next: { revalidate: 30 },
+  });
+
   const products = await res.json();
+  console.log({ products });
   return products;
 }
 
 export async function getLikedProducts() {
   const res = await api.get(`/user/liked-products`);
   const products = res.data;
-  console.log({products})
+  console.log({ products });
   return products;
 }
+
+const buildQueryParams = (params: any) => {
+  const query = new URLSearchParams();
+
+  Object.keys(params).forEach((key) => {
+    if (params[key]) {
+      query.append(key, params[key]);
+    }
+  });
+
+  return query.toString();
+};
