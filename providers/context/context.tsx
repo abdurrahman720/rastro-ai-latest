@@ -40,7 +40,7 @@ function Context({ children }: { children: React.ReactNode }) {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [refetchAlerts, setRefetchAlerts] = useState<boolean>(false);
-  const [productClicks, setProductClicks] = useState(0);
+  const [productRequests, setProductRequests] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -81,8 +81,9 @@ function Context({ children }: { children: React.ReactNode }) {
 
   const searchProducts = async () => {
     setIsSearching(true);
+    setProductRequests(productRequests + 1);
+    console.log('PRODUCTs REQUESTED!! Requests:', productRequests);
     const searchedProducts = await getProducts(1, 21, searchQuery);
-
     setProducts(searchedProducts);
     setIsSearching(false);
   };
@@ -131,12 +132,12 @@ function Context({ children }: { children: React.ReactNode }) {
   }, [refetchProducts]);
 
   useEffect(() => {
-    // Trigger login modal if 3 product clicks and user not logged in
-    if (productClicks >= 3 && !user) {
+    // Trigger login modal if 8 product clicks / requests (scrolls) and user not logged in
+    if (productRequests >= 8 && !user) {
       handleSignupOrLogin();
-      setProductClicks(0); // Reset product clicks after showing login modal
+      setProductRequests(0); // Reset product clicks after showing login modal
     }
-  }, [productClicks, user]);
+  }, [productRequests, user]);
 
   useEffect(() => {
     const getAlerts = async () => {
@@ -196,8 +197,8 @@ function Context({ children }: { children: React.ReactNode }) {
         openAuthModal,
         setOpenAuthModal,
         user,
-        productClicks,
-        setProductClicks,
+        productRequests,
+        setProductRequests,
         loadingUser,
         searchQuery,
         setSearchQuery,

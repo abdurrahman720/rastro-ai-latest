@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ProductsCard = ({ product, lastElRef }: Props) => {
-  const { handleLinkUnlike, likedProductsIds, productClicks, setProductClicks } = useAppContext();
+  const { handleLinkUnlike, likedProductsIds, productRequests, setProductRequests } = useAppContext();
   const [isImageLoading, setImageLoading] = useState(true);
   const closesAt: Date = new Date(product.closes_at);
   const now: Date = new Date();
@@ -33,8 +33,8 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
   const isLikedPage = currentPathname.includes('liked-products');
 
   const handleClick = () => {
-    setProductClicks(productClicks + 1);
-    console.log('PRODUCT CLICKED!! Clicks:', productClicks);
+    setProductRequests(productRequests + 1);
+    console.log('PRODUCT CLICKED!! Requests:', productRequests);
   }
 
   return (

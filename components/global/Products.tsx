@@ -22,7 +22,7 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
 
   const searchQuery = params.get('search');
 
-  const { setProducts, products } = useAppContext();
+  const { setProducts, products, productRequests, setProductRequests } = useAppContext();
 
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -36,6 +36,7 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
 
   const loadMoreProducts = async () => {
     const nextPage = page + 1;
+    setProductRequests(productRequests + 1);
     setLoading(true);
 
     let url =
