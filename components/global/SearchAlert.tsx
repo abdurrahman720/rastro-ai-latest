@@ -19,9 +19,9 @@ import { YearRangeInput } from './YearRangeInput';
 const SearchAlert = ({ searchParams }: { searchParams: any }) => {
   const {
     user,
-    handleLogin,
-    open,
-    setOpen,
+    handleSignupOrLogin,
+    openSearchAlert,
+    setOpenSearchAlert,
     handleOpenAlert,
     refetchAlerts,
     setRefetchAlerts,
@@ -47,7 +47,7 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
         toast.success('Alert saved!', {
           position: 'top-center',
         });
-        setOpen(false);
+        setOpenSearchAlert(false);
         setLoading(false);
       }
     } catch (error: any) {
@@ -120,7 +120,7 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
 
   const handleOpenEditAlert = () => {
     if (!user) {
-      return handleLogin();
+      return handleSignupOrLogin();
     }
 
     setOpenEditAlert(true);
@@ -175,8 +175,8 @@ const SearchAlert = ({ searchParams }: { searchParams: any }) => {
       </div>
 
       <AddAlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={openSearchAlert}
+        onClose={() => openSearchAlert(false)}
         onConfirm={onConfirm}
         loading={loading}
         search={searchParams?.search}

@@ -1,15 +1,11 @@
 'use client';
 
 import { getProducts } from '@/actions/dataFetcher';
+import AuthModal from '@/components/global/AuthModal';
 import { auth } from '@/firebase/firebase';
 import api from '@/utils/axiosInstance';
 import axiosInstance from '@/utils/axiosInstance';
-import {
-  onAuthStateChanged,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-} from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -37,10 +33,12 @@ function Context({ children }: { children: React.ReactNode }) {
   const [likedProducts, setLikedProducts] = useState<any>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [refetchProducts, setRefetchProducts] = useState<boolean>(false);
-  const [open, setOpen] = useState(false);
+  const [openSearchAlert, setOpenSearchAlert] = useState(false);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [refetchAlerts, setRefetchAlerts] = useState<boolean>(false);
   const [filterQueries, setFilterQueries] = useState<any>({});
+  const [productRequests, setProductRequests] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -64,11 +62,9 @@ function Context({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch (error) {
-      console.error('Login error:', error);
+  const handleSignupOrLogin = async () => {
+    if (!user) {
+      setOpenAuthModal(true);
     }
   };
 
@@ -83,8 +79,9 @@ function Context({ children }: { children: React.ReactNode }) {
 
   const searchProducts = async () => {
     setIsSearching(true);
+    setProductRequests(productRequests + 1);
+    console.log('PRODUCTs REQUESTED!! Requests:', productRequests);
     const searchedProducts = await getProducts(1, 21, searchQuery);
-
     setProducts(searchedProducts);
     setIsSearching(false);
   };
@@ -133,6 +130,14 @@ function Context({ children }: { children: React.ReactNode }) {
   }, [refetchProducts]);
 
   useEffect(() => {
+    // Trigger login modal if 8 product clicks / requests (scrolls) and user not logged in
+    if (productRequests >= 8 && !user) {
+      handleSignupOrLogin();
+      setProductRequests(0); // Reset product clicks after showing login modal
+    }
+  }, [productRequests, user]);
+
+  useEffect(() => {
     const getAlerts = async () => {
       try {
         const response = await api.get(`/user/alert_configs`);
@@ -146,7 +151,7 @@ function Context({ children }: { children: React.ReactNode }) {
 
   const handleLinkUnlike = async (isLiked: boolean, id: string | number) => {
     if (!user) {
-      return handleLogin();
+      return handleSignupOrLogin();
     }
 
     if (isLiked) {
@@ -174,10 +179,10 @@ function Context({ children }: { children: React.ReactNode }) {
 
   const handleOpenAlert = () => {
     if (!user) {
-      return handleLogin();
+      return handleSignupOrLogin();
     }
 
-    setOpen(true);
+    setOpenSearchAlert(true);
   };
 
   const likedProductsIds = likedProducts.map((prod: any) => prod.id);
@@ -185,9 +190,13 @@ function Context({ children }: { children: React.ReactNode }) {
   return (
     <AppContext.Provider
       value={{
-        handleLogin,
+        handleSignupOrLogin,
         handleLogout,
+        openAuthModal,
+        setOpenAuthModal,
         user,
+        productRequests,
+        setProductRequests,
         loadingUser,
         searchQuery,
         setSearchQuery,
@@ -202,8 +211,8 @@ function Context({ children }: { children: React.ReactNode }) {
         refetchProducts,
         handleLinkUnlike,
         likedProductsIds,
-        open,
-        setOpen,
+        openSearchAlert,
+        setOpenSearchAlert,
         handleOpenAlert,
         refetchAlerts,
         setRefetchAlerts,
@@ -212,6 +221,7 @@ function Context({ children }: { children: React.ReactNode }) {
         filterQueries,
       }}
     >
+      <AuthModal />
       {children}
     </AppContext.Provider>
   );

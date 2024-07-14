@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ProductsCard = ({ product, lastElRef }: Props) => {
-  const { handleLinkUnlike, likedProductsIds } = useAppContext();
+  const { handleLinkUnlike, likedProductsIds, productRequests, setProductRequests } = useAppContext();
   const [isImageLoading, setImageLoading] = useState(true);
   const closesAt: Date = new Date(product.closes_at);
   const now: Date = new Date();
@@ -32,8 +32,13 @@ const ProductsCard = ({ product, lastElRef }: Props) => {
   const currentPathname = usePathname();
   const isLikedPage = currentPathname.includes('liked-products');
 
+  const handleClick = () => {
+    setProductRequests(productRequests + 1);
+    console.log('PRODUCT CLICKED!! Requests:', productRequests);
+  }
+
   return (
-    <Link href={`/product/${product.id}`} prefetch={true} ref={lastElRef}>
+    <Link href={`/product/${product.id}`} prefetch={true} ref={lastElRef} onClick={handleClick}>
       <div className=' mb-4 break-inside-avoid p-1 rounded-sm group cursor-pointer z-10'>
         <div className='relative'>
           <Image
