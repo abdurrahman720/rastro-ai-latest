@@ -34,7 +34,7 @@ export async function getProducts(
   console.log({searchQuery})
 
   const res = await fetch(
-    `${BASE_URL}/products?page=${page}&page_size=${page_size}&query=${searchQuery}`,
+    `${BASE_URL}/products/?page=${page}&page_size=${page_size}&query=${searchQuery}`,
     { next: { revalidate: 30 } }
   );
   const products = await res.json();

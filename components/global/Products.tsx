@@ -46,9 +46,8 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
     let url =
       suggestionPage && productId
         ? `/product/${productId}/nearest?page=${page}&page_size=${40}`
-        : `/products?page=${nextPage}&page_size=${16}${
-            searchQuery ? `&query=${searchQuery}` : ''
-          }`;
+        : `/products/?page=${nextPage}&page_size=${16}${searchQuery ? `&query=${searchQuery}` : ''
+        }`;
 
     try {
       const res = await axiosInstance.get(url);
@@ -64,9 +63,9 @@ const Products = ({ initialProducts, productId, suggestionPage }: Props) => {
             nextPage === 1
               ? newProducts
               : [
-                  ...prev,
-                  ...newProducts.filter((p: any) => !previds.has(p.id)),
-                ];
+                ...prev,
+                ...newProducts.filter((p: any) => !previds.has(p.id)),
+              ];
           return finalProducts || [];
         });
 
